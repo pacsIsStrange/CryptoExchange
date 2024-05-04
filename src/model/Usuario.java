@@ -9,18 +9,21 @@ package model;
  * @author Pedro Alexandre
  */
 public class Usuario {
-    private String cpf, senha, btc, eth, xrp, nome;
+    private String cpf, senha, nome;
+    private Bitcoin btc;
+    private Ethereum eth;
+    private Ripple xrp;
 
     public Usuario() {
     }
 
-    public Usuario(String cpf, String senha, String btc, String eth, String xrp, String nome) {
+    public Usuario(String cpf, String senha, String nome, Bitcoin btc, Ethereum eth, Ripple xrp) {
         this.cpf = cpf;
         this.senha = senha;
+        this.nome = nome;
         this.btc = btc;
         this.eth = eth;
         this.xrp = xrp;
-        this.nome = nome;
     }
     
     public String getCpf() {
@@ -39,30 +42,6 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public String getBtc() {
-        return btc;
-    }
-
-    public void setBtc(String btc) {
-        this.btc = btc;
-    }
-
-    public String getEth() {
-        return eth;
-    }
-
-    public void setEth(String eth) {
-        this.eth = eth;
-    }
-
-    public String getXrp() {
-        return xrp;
-    }
-
-    public void setXrp(String xrp) {
-        this.xrp = xrp;
-    }
-
     public String getNome() {
         return nome;
     }
@@ -70,5 +49,29 @@ public class Usuario {
     public void setNome(String nome) {
         this.nome = nome;
     }
-    
+
+    public Bitcoin getBtc() {
+        return btc;
+    }
+
+    public void setBtc(Bitcoin btc) {
+        this.btc = btc;
+    }
+
+    public Ethereum getEth() {
+        return eth;
+    }
+
+    public void setEth(Ethereum eth) {
+        this.eth = eth;
+    }
+
+    public Ripple getXrp() {
+        return xrp;
+    }
+
+    public void setXrp(Ripple xrp) {
+        this.xrp = xrp;
+    }
+
 }

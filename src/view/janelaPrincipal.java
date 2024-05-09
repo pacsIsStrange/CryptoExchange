@@ -10,10 +10,10 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
@@ -32,228 +32,20 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         control = new Controller(this);
     }
 
+    public Controller getControl() {
+        return control;
+    }
+
+    public void setControl(Controller control) {
+        this.control = control;
+    }
+
     public JButton getBotaoLogin() {
         return botaoLogin;
     }
 
     public void setBotaoLogin(JButton botaoLogin) {
         this.botaoLogin = botaoLogin;
-    }
-
-    public ButtonGroup getButtonGroup1() {
-        return buttonGroup1;
-    }
-
-    public void setButtonGroup1(ButtonGroup buttonGroup1) {
-        this.buttonGroup1 = buttonGroup1;
-    }
-
-    public JPanel getDisplayTrade() {
-        return displayTrade;
-    }
-
-    public void setDisplayTrade(JPanel displayTrade) {
-        this.displayTrade = displayTrade;
-    }
-
-    public JPanel getDisplayTrade1() {
-        return displayVazio;
-    }
-
-    public void setDisplayTrade1(JPanel displayTrade1) {
-        this.displayVazio = displayTrade1;
-    }
-
-    public JButton getjButton1() {
-        return jButton1;
-    }
-
-    public void setjButton1(JButton jButton1) {
-        this.jButton1 = jButton1;
-    }
-
-    public JComboBox<String> getjComboBox1() {
-        return opcMoedaTroca;
-    }
-
-    public void setjComboBox1(JComboBox<String> jComboBox1) {
-        this.opcMoedaTroca = jComboBox1;
-    }
-
-    public JLabel getjLabel1() {
-        return jLabel1;
-    }
-
-    public void setjLabel1(JLabel jLabel1) {
-        this.jLabel1 = jLabel1;
-    }
-
-    public JTextField getTxtSenha() {
-        return txtSenha;
-    }
-
-    public void setTxtSenha(JTextField txtSenha) {
-        this.txtSenha = txtSenha;
-    }
-
-    public JProgressBar getjProgressBar1() {
-        return jProgressBar1;
-    }
-
-    public void setjProgressBar1(JProgressBar jProgressBar1) {
-        this.jProgressBar1 = jProgressBar1;
-    }
-
-    public JProgressBar getjProgressBar2() {
-        return jProgressBar2;
-    }
-
-    public void setjProgressBar2(JProgressBar jProgressBar2) {
-        this.jProgressBar2 = jProgressBar2;
-    }
-
-    public JProgressBar getjProgressBar3() {
-        return jProgressBar3;
-    }
-
-    public void setjProgressBar3(JProgressBar jProgressBar3) {
-        this.jProgressBar3 = jProgressBar3;
-    }
-
-    public JSeparator getjSeparator1() {
-        return jSeparator1;
-    }
-
-    public void setjSeparator1(JSeparator jSeparator1) {
-        this.jSeparator1 = jSeparator1;
-    }
-
-    public JToggleButton getjToggleButton1() {
-        return btCompraVenda;
-    }
-
-    public void setjToggleButton1(JToggleButton jToggleButton1) {
-        this.btCompraVenda = jToggleButton1;
-    }
-
-    public JToggleButton getjToggleButton2() {
-        return btDepSac;
-    }
-
-    public void setjToggleButton2(JToggleButton jToggleButton2) {
-        this.btDepSac = jToggleButton2;
-    }
-
-    public JToggleButton getjToggleButton3() {
-        return btCarteira;
-    }
-
-    public void setjToggleButton3(JToggleButton jToggleButton3) {
-        this.btCarteira = jToggleButton3;
-    }
-
-    public JToggleButton getjToggleButton4() {
-        return btExtrato;
-    }
-
-    public void setjToggleButton4(JToggleButton jToggleButton4) {
-        this.btExtrato = jToggleButton4;
-    }
-
-    public JLabel getLblBtc() {
-        return lblBtc;
-    }
-
-    public void setLblBtc(JLabel lblBtc) {
-        this.lblBtc = lblBtc;
-    }
-
-    public JLabel getLblCotações() {
-        return lblCotações;
-    }
-
-    public void setLblCotações(JLabel lblCotações) {
-        this.lblCotações = lblCotações;
-    }
-
-    public JLabel getLblEth() {
-        return lblEth;
-    }
-
-    public void setLblEth(JLabel lblEth) {
-        this.lblEth = lblEth;
-    }
-
-    public JLabel getLblValorBitcoin() {
-        return lblValorBitcoin;
-    }
-
-    public void setLblValorBitcoin(JLabel lblValorBitcoin) {
-        this.lblValorBitcoin = lblValorBitcoin;
-    }
-
-    public JLabel getLblValorEth() {
-        return lblValorEth;
-    }
-
-    public void setLblValorEth(JLabel lblValorEth) {
-        this.lblValorEth = lblValorEth;
-    }
-
-    public JLabel getLblValorXrp() {
-        return lblValorXrp;
-    }
-
-    public void setLblValorXrp(JLabel lblValorXrp) {
-        this.lblValorXrp = lblValorXrp;
-    }
-
-    public JLabel getLblXrp() {
-        return lblXrp;
-    }
-
-    public void setLblXrp(JLabel lblXrp) {
-        this.lblXrp = lblXrp;
-    }
-
-    public JPanel getPainelBotoes() {
-        return painelBotoes;
-    }
-
-    public void setPainelBotoes(JPanel painelBotoes) {
-        this.painelBotoes = painelBotoes;
-    }
-
-    public JPanel getPainelLogin() {
-        return painelLogin;
-    }
-
-    public void setPainelLogin(JPanel painelLogin) {
-        this.painelLogin = painelLogin;
-    }
-
-    public JTextField getTxtCpf() {
-        return txtCpf;
-    }
-
-    public void setTxtCpf(JTextField txtCpf) {
-        this.txtCpf = txtCpf;
-    }
-
-    public JToggleButton getBtCarteira() {
-        return btCarteira;
-    }
-
-    public void setBtCarteira(JToggleButton btCarteira) {
-        this.btCarteira = btCarteira;
-    }
-
-    public JToggleButton getBtCompraVenda() {
-        return btCompraVenda;
-    }
-
-    public void setBtCompraVenda(JToggleButton btCompraVenda) {
-        this.btCompraVenda = btCompraVenda;
     }
 
     public JButton getBtComprar() {
@@ -264,28 +56,12 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         this.btComprar = btComprar;
     }
 
-    public JToggleButton getBtDepSac() {
-        return btDepSac;
-    }
-
-    public void setBtDepSac(JToggleButton btDepSac) {
-        this.btDepSac = btDepSac;
-    }
-
     public JButton getBtDepositar() {
         return btDepositar;
     }
 
     public void setBtDepositar(JButton btDepositar) {
         this.btDepositar = btDepositar;
-    }
-
-    public JToggleButton getBtExtrato() {
-        return btExtrato;
-    }
-
-    public void setBtExtrato(JToggleButton btExtrato) {
-        this.btExtrato = btExtrato;
     }
 
     public JButton getBtSacar() {
@@ -302,6 +78,14 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
     public void setBtVender(JButton btVender) {
         this.btVender = btVender;
+    }
+
+    public ButtonGroup getButtonGroup1() {
+        return buttonGroup1;
+    }
+
+    public void setButtonGroup1(ButtonGroup buttonGroup1) {
+        this.buttonGroup1 = buttonGroup1;
     }
 
     public JPanel getDisplayCarteira() {
@@ -328,6 +112,14 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         this.displayExtrato = displayExtrato;
     }
 
+    public JPanel getDisplayTrade() {
+        return displayTrade;
+    }
+
+    public void setDisplayTrade(JPanel displayTrade) {
+        this.displayTrade = displayTrade;
+    }
+
     public JPanel getDisplayVazio() {
         return displayVazio;
     }
@@ -336,12 +128,60 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         this.displayVazio = displayVazio;
     }
 
+    public JButton getjButton1() {
+        return jButton1;
+    }
+
+    public void setjButton1(JButton jButton1) {
+        this.jButton1 = jButton1;
+    }
+
+    public JLabel getjLabel1() {
+        return jLabel1;
+    }
+
+    public void setjLabel1(JLabel jLabel1) {
+        this.jLabel1 = jLabel1;
+    }
+
+    public JProgressBar getjProgressBar1() {
+        return jProgressBar1;
+    }
+
+    public void setjProgressBar1(JProgressBar jProgressBar1) {
+        this.jProgressBar1 = jProgressBar1;
+    }
+
+    public JProgressBar getjProgressBar2() {
+        return jProgressBar2;
+    }
+
+    public void setjProgressBar2(JProgressBar jProgressBar2) {
+        this.jProgressBar2 = jProgressBar2;
+    }
+
+    public JProgressBar getjProgressBar3() {
+        return jProgressBar3;
+    }
+
+    public void setjProgressBar3(JProgressBar jProgressBar3) {
+        this.jProgressBar3 = jProgressBar3;
+    }
+
     public JScrollPane getjScrollPane1() {
         return jScrollPane1;
     }
 
     public void setjScrollPane1(JScrollPane jScrollPane1) {
         this.jScrollPane1 = jScrollPane1;
+    }
+
+    public JTabbedPane getjTabbedPane1() {
+        return jTabbedPane1;
+    }
+
+    public void setjTabbedPane1(JTabbedPane jTabbedPane1) {
+        this.jTabbedPane1 = jTabbedPane1;
     }
 
     public JTable getjTable1() {
@@ -472,12 +312,100 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         this.labelValorTroca1 = labelValorTroca1;
     }
 
+    public JLabel getLblBtc() {
+        return lblBtc;
+    }
+
+    public void setLblBtc(JLabel lblBtc) {
+        this.lblBtc = lblBtc;
+    }
+
+    public JLabel getLblCotações() {
+        return lblCotações;
+    }
+
+    public void setLblCotações(JLabel lblCotações) {
+        this.lblCotações = lblCotações;
+    }
+
+    public JLabel getLblEth() {
+        return lblEth;
+    }
+
+    public void setLblEth(JLabel lblEth) {
+        this.lblEth = lblEth;
+    }
+
+    public JLabel getLblValorBitcoin() {
+        return lblValorBitcoin;
+    }
+
+    public void setLblValorBitcoin(JLabel lblValorBitcoin) {
+        this.lblValorBitcoin = lblValorBitcoin;
+    }
+
+    public JLabel getLblValorEth() {
+        return lblValorEth;
+    }
+
+    public void setLblValorEth(JLabel lblValorEth) {
+        this.lblValorEth = lblValorEth;
+    }
+
+    public JLabel getLblValorXrp() {
+        return lblValorXrp;
+    }
+
+    public void setLblValorXrp(JLabel lblValorXrp) {
+        this.lblValorXrp = lblValorXrp;
+    }
+
+    public JLabel getLblXrp() {
+        return lblXrp;
+    }
+
+    public void setLblXrp(JLabel lblXrp) {
+        this.lblXrp = lblXrp;
+    }
+
     public JComboBox<String> getOpcMoedaTroca() {
         return opcMoedaTroca;
     }
 
     public void setOpcMoedaTroca(JComboBox<String> opcMoedaTroca) {
         this.opcMoedaTroca = opcMoedaTroca;
+    }
+
+    public JPanel getPainelLogin() {
+        return painelLogin;
+    }
+
+    public void setPainelLogin(JPanel painelLogin) {
+        this.painelLogin = painelLogin;
+    }
+
+    public JPanel getPainelMoedas() {
+        return painelMoedas;
+    }
+
+    public void setPainelMoedas(JPanel painelMoedas) {
+        this.painelMoedas = painelMoedas;
+    }
+
+    public JTextField getTxtCpf() {
+        return txtCpf;
+    }
+
+    public void setTxtCpf(JTextField txtCpf) {
+        this.txtCpf = txtCpf;
+    }
+
+    public JTextField getTxtSenha() {
+        return txtSenha;
+    }
+
+    public void setTxtSenha(JTextField txtSenha) {
+        this.txtSenha = txtSenha;
     }
 
     public JTextField getTxtValorTroca() {
@@ -495,6 +423,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     public void setTxtValorTroca1(JTextField txtValorTroca1) {
         this.txtValorTroca1 = txtValorTroca1;
     }
+
     
     
     
@@ -514,7 +443,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         txtSenha = new javax.swing.JTextField();
         buttonGroup1 = new javax.swing.ButtonGroup();
         displayVazio = new javax.swing.JPanel();
-        painelBotoes = new javax.swing.JPanel();
+        painelMoedas = new javax.swing.JPanel();
         lblCotações = new javax.swing.JLabel();
         lblBtc = new javax.swing.JLabel();
         lblValorBitcoin = new javax.swing.JLabel();
@@ -614,9 +543,9 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             .addGroup(painelLoginLayout.createSequentialGroup()
                 .addGap(506, 506, 506)
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(526, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelLoginLayout.createSequentialGroup()
-                .addContainerGap(525, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(painelLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelLoginLayout.createSequentialGroup()
                         .addComponent(botaoLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -662,7 +591,8 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(1280, 720));
         setResizable(false);
 
-        painelBotoes.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        painelMoedas.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        painelMoedas.setEnabled(false);
 
         lblCotações.setFont(new java.awt.Font("Cantarell", 1, 15)); // NOI18N
         lblCotações.setText("Cotações");
@@ -703,62 +633,62 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout painelBotoesLayout = new javax.swing.GroupLayout(painelBotoes);
-        painelBotoes.setLayout(painelBotoesLayout);
-        painelBotoesLayout.setHorizontalGroup(
-            painelBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelBotoesLayout.createSequentialGroup()
+        javax.swing.GroupLayout painelMoedasLayout = new javax.swing.GroupLayout(painelMoedas);
+        painelMoedas.setLayout(painelMoedasLayout);
+        painelMoedasLayout.setHorizontalGroup(
+            painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelMoedasLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addGroup(painelBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, painelBotoesLayout.createSequentialGroup()
+                .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, painelMoedasLayout.createSequentialGroup()
                         .addComponent(lblBtc)
                         .addGap(18, 18, 18)
                         .addComponent(lblValorBitcoin)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(painelBotoesLayout.createSequentialGroup()
+                    .addGroup(painelMoedasLayout.createSequentialGroup()
                         .addComponent(lblXrp)
                         .addGap(18, 18, 18)
                         .addComponent(lblValorXrp)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                         .addComponent(jProgressBar3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(painelBotoesLayout.createSequentialGroup()
+                    .addGroup(painelMoedasLayout.createSequentialGroup()
                         .addComponent(lblEth)
                         .addGap(18, 18, 18)
                         .addComponent(lblValorEth)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(21, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelBotoesLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelMoedasLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(painelBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelBotoesLayout.createSequentialGroup()
+                .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelMoedasLayout.createSequentialGroup()
                         .addComponent(lblCotações)
                         .addGap(116, 116, 116))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelBotoesLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelMoedasLayout.createSequentialGroup()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(120, 120, 120))))
         );
-        painelBotoesLayout.setVerticalGroup(
-            painelBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelBotoesLayout.createSequentialGroup()
+        painelMoedasLayout.setVerticalGroup(
+            painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelMoedasLayout.createSequentialGroup()
                 .addGap(12, 12, 12)
                 .addComponent(lblCotações)
                 .addGap(116, 116, 116)
-                .addGroup(painelBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(painelBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblBtc)
                         .addComponent(lblValorBitcoin)))
                 .addGap(116, 116, 116)
-                .addGroup(painelBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(painelBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblEth)
                         .addComponent(lblValorEth))
                     .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(116, 116, 116)
-                .addGroup(painelBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(painelBotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblXrp)
                         .addComponent(lblValorXrp))
                     .addComponent(jProgressBar3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -768,6 +698,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         );
 
         jTabbedPane1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jTabbedPane1.setEnabled(false);
 
         displayTrade.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -849,7 +780,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                 .addGroup(displayTradeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btVender, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(147, Short.MAX_VALUE))
+                .addContainerGap(155, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Comprar/Vender", displayTrade);
@@ -918,7 +849,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                 .addGroup(displayDepSacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btDepositar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btSacar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(184, Short.MAX_VALUE))
+                .addContainerGap(192, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Depositar/Sacar", displayDepSac);
@@ -991,7 +922,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                 .addComponent(labelSaldoReais2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60)
                 .addComponent(labelSaldoReais3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(137, Short.MAX_VALUE))
+                .addContainerGap(145, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Carteira", displayCarteira);
@@ -1075,7 +1006,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(painelBotoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(painelMoedas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTabbedPane1)
                 .addContainerGap())
@@ -1086,7 +1017,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jTabbedPane1)
-                    .addComponent(painelBotoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(painelMoedas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(6, 6, 6))
         );
 
@@ -1106,21 +1037,15 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtCpfFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCpfFocusGained
-        if (txtCpf.getText().equals("CPF")){
-            txtCpf.setText("");
-        }
+
     }//GEN-LAST:event_txtCpfFocusGained
 
     private void txtCpfFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCpfFocusLost
-        if (txtCpf.getText().equals("")){
-            txtCpf.setText("CPF");
-        }
+
     }//GEN-LAST:event_txtCpfFocusLost
 
     private void txtCpfPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_txtCpfPropertyChange
-        if ("enabled".equals(evt.getPropertyName())){
-            if (txtCpf.getText().isEmpty()){txtCpf.setText("CPF");}
-        }
+
     }//GEN-LAST:event_txtCpfPropertyChange
 
     private void txtSenhaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSenhaFocusGained
@@ -1154,40 +1079,40 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JanelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JanelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JanelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JanelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new JanelaPrincipal().setVisible(true);
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(JanelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(JanelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(JanelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(JanelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new JanelaPrincipal().setVisible(true);
+//            }
+//        });
+//    }
     
     private Controller control;
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1233,8 +1158,8 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel lblValorXrp;
     private javax.swing.JLabel lblXrp;
     private javax.swing.JComboBox<String> opcMoedaTroca;
-    private javax.swing.JPanel painelBotoes;
     private javax.swing.JPanel painelLogin;
+    private javax.swing.JPanel painelMoedas;
     private javax.swing.JTextField txtCpf;
     private javax.swing.JTextField txtSenha;
     private javax.swing.JTextField txtValorTroca;

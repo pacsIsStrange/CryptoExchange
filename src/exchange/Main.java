@@ -4,12 +4,15 @@
  */
 package exchange;
 
+import view.JanelaLogin;
+
 /**
  *
  * @author Pedro Alexandre
  */
 public class Main {
     public static void main(String[] args) {
-        
+        JanelaLogin janelaLogin = new JanelaLogin();
+        janelaLogin.setVisible(true);
     }
 }

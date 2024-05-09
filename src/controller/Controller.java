@@ -11,20 +11,27 @@ import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
+import view.JanelaLogin;
 /**
  *
  * @author Pedro Alexandre
  */
 public class Controller {
-    private JanelaPrincipal view;
+    private JanelaPrincipal janelaPrincipal;
+    private JanelaLogin janelaLogin;
     
-    public Controller(JanelaPrincipal view){
-        this.view = view;
+    public Controller(JanelaPrincipal janelaPrincipal){
+        this.janelaPrincipal = janelaPrincipal;
+        this.janelaPrincipal.setVisible(false);
+    }
+
+    public Controller(JanelaLogin janelaLogin) {
+        this.janelaLogin = janelaLogin;
     }
     
     public void loginUsuario(){
-        Usuario usuario = new Usuario(view.getTxtCpf().getText(), 
-                                      view.getTxtSenha().getText(), 
+        Usuario usuario = new Usuario(janelaLogin.getTxtCpf().getText(), 
+                                      janelaLogin.getTxtSenha().getText(), 
                                       null, null, null, null);
         Conexao conexao = new Conexao();
         try{
@@ -32,13 +39,15 @@ public class Controller {
             UsuarioDAO dao = new UsuarioDAO(conn);
             ResultSet res = dao.consultar(usuario);
             if (
-                res.next()){JOptionPane.showMessageDialog(view, "Login realizado com sucesso.");
-                view.painelLogin.setVisible(false);
+                res.next()){JOptionPane.showMessageDialog(janelaLogin, "Login realizado com sucesso.");
+                janelaLogin.setVisible(false);
+                janelaPrincipal.setVisible(true);
             } else {
-                JOptionPane.showMessageDialog(view, "CPF e/ou senha inválidos.");
+                JOptionPane.showMessageDialog(janelaLogin, "CPF e/ou senha inválidos.");
             }
         }catch(SQLException e){
-            JOptionPane.showMessageDialog(view, "Não foi possível estabelecer a conexão.");
+            JOptionPane.showMessageDialog(janelaLogin, "Não foi possível estabelecer a conexão.");
         }
     }
+    
 }

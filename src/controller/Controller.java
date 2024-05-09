@@ -22,7 +22,6 @@ public class Controller {
     
     public Controller(JanelaPrincipal janelaPrincipal){
         this.janelaPrincipal = janelaPrincipal;
-        this.janelaPrincipal.setVisible(false);
     }
 
     public Controller(JanelaLogin janelaLogin) {

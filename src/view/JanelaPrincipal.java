@@ -5,7 +5,6 @@
 package view;
 
 import controller.Controller;
-import java.awt.Color;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -13,13 +12,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.JToggleButton;
 import model.Usuario;
-import java.text.DecimalFormat;
 
 /**
  *
@@ -32,6 +28,10 @@ public class JanelaPrincipal extends javax.swing.JFrame {
      */
     public JanelaPrincipal(Controller control, Usuario usuario) {
         initComponents();
+        Double qtdBtc = usuario.getBtc().getQtd();
+        Double qtdEth = usuario.getEth().getQtd();
+        Double qtdXrp = usuario.getXrp().getQtd();
+        
         this.usuario = usuario;
         this.control = control;
         this.labelNome.setText("Nome: " + usuario.getNome());
@@ -39,23 +39,23 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         this.labelCpf.setText("CPF: " + usuario.getCpf());
         this.labelCpf1.setText(this.labelCpf.getText());
         this.labelSaldoReais.setText("R$: " + usuario.getReais());
-        this.labelSaldoBtc.setText("BTC: " + usuario.getBtc().getQtd());
-        this.labelSaldoEth.setText("ETH: " + usuario.getEth().getQtd());
-        this.labelSaldoXrp.setText("XRP: " + usuario.getXrp().getQtd());
-        this.auxTotal = usuario.getBtc().getQtd() * control.getCtBtc() + 
-                        usuario.getEth().getQtd() * control.getCtEth() +
-                        usuario.getXrp().getQtd() * control.getCtXrp();
-        DecimalFormat df = new DecimalFormat("#.##");
-        String btcFormatado = df.format(control.getCtBtc());
-        String ethFormatado = df.format(control.getCtEth());
-        String xrpFormatado = df.format(control.getCtXrp());
-        String totalFormatado = df.format(this.auxTotal);
+        this.labelSaldoBtc.setText("BTC: " + qtdBtc);
+        this.labelSaldoEth.setText("ETH: " + qtdEth);
+        this.labelSaldoXrp.setText("XRP: " + qtdXrp);
+        this.auxTotal = qtdBtc*control.getCtBtc()+ qtdEth * control.getCtEth() +
+                                                    qtdXrp * control.getCtXrp();
+        
+        String btcFormatado = control.df.format(control.getCtBtc());
+        String ethFormatado = control.df.format(control.getCtEth());
+        String xrpFormatado = control.df.format(control.getCtXrp());
+        String reaisFormatado = control.df.format(usuario.getReais());
+        String totalFormatado = control.df.format(this.auxTotal);
         this.labelValorBtc.setText(btcFormatado);
         this.labelValorEth.setText(ethFormatado);
         this.labelValorXrp.setText(xrpFormatado);
-        this.labelSaldoTotal.setText("Seu saldo: R$" + totalFormatado);
-        this.labelSaldoTotal1.setText(this.labelSaldoTotal.getText());
         this.labelSaldoTotal2.setText("Saldo total: R$" + totalFormatado);
+        this.labelSaldoEspecifico.setText("Saldo atual: " + qtdBtc + " (R$" +
+                            control.df.format(qtdBtc * control.getCtBtc())+")");
     }
 
     public Controller getControl() {
@@ -112,14 +112,6 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
     public void setButtonGroup1(ButtonGroup buttonGroup1) {
         this.buttonGroup1 = buttonGroup1;
-    }
-
-    public JPanel getDisplayCarteira() {
-        return displayCarteira;
-    }
-
-    public void setDisplayCarteira(JPanel displayCarteira) {
-        this.displayCarteira = displayCarteira;
     }
 
     public JPanel getDisplayDepSac() {
@@ -251,19 +243,19 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }
 
     public JLabel getLabelSaldoEspecífico() {
-        return labelSaldoEspecífico;
+        return labelSaldoEspecifico;
     }
 
     public void setLabelSaldoEspecífico(JLabel labelSaldoEspecífico) {
-        this.labelSaldoEspecífico = labelSaldoEspecífico;
+        this.labelSaldoEspecifico = labelSaldoEspecífico;
     }
 
     public JLabel getLabelSaldoEspecífico1() {
-        return labelSaldoEspecífico1;
+        return labelSaldoEspecifico1;
     }
 
     public void setLabelSaldoEspecífico1(JLabel labelSaldoEspecífico1) {
-        this.labelSaldoEspecífico1 = labelSaldoEspecífico1;
+        this.labelSaldoEspecifico1 = labelSaldoEspecífico1;
     }
 
     public JLabel getLabelSaldoReais() {
@@ -296,22 +288,6 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
     public void setLabelSaldoReais3(JLabel labelSaldoReais3) {
         this.labelSaldoXrp = labelSaldoReais3;
-    }
-
-    public JLabel getLabelSaldoTotal() {
-        return labelSaldoTotal;
-    }
-
-    public void setLabelSaldoTotal(JLabel labelSaldoTotal) {
-        this.labelSaldoTotal = labelSaldoTotal;
-    }
-
-    public JLabel getLabelSaldoTotal1() {
-        return labelSaldoTotal1;
-    }
-
-    public void setLabelSaldoTotal1(JLabel labelSaldoTotal1) {
-        this.labelSaldoTotal1 = labelSaldoTotal1;
     }
 
     public JLabel getLabelSaldoTotal2() {
@@ -450,6 +426,54 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         this.txtValorTroca1 = txtValorTroca1;
     }
 
+    public JProgressBar getIndexBtc() {
+        return indexBtc;
+    }
+
+    public void setIndexBtc(JProgressBar indexBtc) {
+        this.indexBtc = indexBtc;
+    }
+
+    public JProgressBar getIndexEth() {
+        return indexEth;
+    }
+
+    public void setIndexEth(JProgressBar indexEth) {
+        this.indexEth = indexEth;
+    }
+
+    public JProgressBar getIndexXrp() {
+        return indexXrp;
+    }
+
+    public void setIndexXrp(JProgressBar indexXrp) {
+        this.indexXrp = indexXrp;
+    }
+
+    public JLabel getLabelValorBtc() {
+        return labelValorBtc;
+    }
+
+    public void setLabelValorBtc(JLabel labelValorBtc) {
+        this.labelValorBtc = labelValorBtc;
+    }
+
+    public JLabel getLabelValorEth() {
+        return labelValorEth;
+    }
+
+    public void setLabelValorEth(JLabel labelValorEth) {
+        this.labelValorEth = labelValorEth;
+    }
+
+    public JLabel getLabelValorXrp() {
+        return labelValorXrp;
+    }
+
+    public void setLabelValorXrp(JLabel labelValorXrp) {
+        this.labelValorXrp = labelValorXrp;
+    }
+
     
     
     
@@ -481,23 +505,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         indexEth = new javax.swing.JProgressBar();
         indexXrp = new javax.swing.JProgressBar();
         jButton1 = new javax.swing.JButton();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
-        displayTrade = new javax.swing.JPanel();
-        labelSaldoTotal = new javax.swing.JLabel();
-        opcMoedaTroca = new javax.swing.JComboBox<>();
-        labelSaldoEspecífico = new javax.swing.JLabel();
-        txtValorTroca = new javax.swing.JTextField();
-        labelSaldoEspecífico1 = new javax.swing.JLabel();
-        labelValorTroca = new javax.swing.JLabel();
-        btComprar = new javax.swing.JButton();
-        btVender = new javax.swing.JButton();
-        displayDepSac = new javax.swing.JPanel();
-        labelSaldoTotal1 = new javax.swing.JLabel();
-        txtValorTroca1 = new javax.swing.JTextField();
-        labelValorTroca1 = new javax.swing.JLabel();
-        btDepositar = new javax.swing.JButton();
-        btSacar = new javax.swing.JButton();
-        displayCarteira = new javax.swing.JPanel();
+        jSeparator1 = new javax.swing.JSeparator();
         labelNome = new javax.swing.JLabel();
         labelCpf = new javax.swing.JLabel();
         labelSaldoTotal2 = new javax.swing.JLabel();
@@ -505,11 +513,26 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         labelSaldoBtc = new javax.swing.JLabel();
         labelSaldoEth = new javax.swing.JLabel();
         labelSaldoXrp = new javax.swing.JLabel();
+        labelCarteira = new javax.swing.JLabel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        displayTrade = new javax.swing.JPanel();
+        opcMoedaTroca = new javax.swing.JComboBox<>();
+        labelSaldoEspecifico = new javax.swing.JLabel();
+        txtValorTroca = new javax.swing.JTextField();
+        labelSaldoEspecifico1 = new javax.swing.JLabel();
+        labelValorTroca = new javax.swing.JLabel();
+        btComprar = new javax.swing.JButton();
+        btVender = new javax.swing.JButton();
         displayExtrato = new javax.swing.JPanel();
         labelNome1 = new javax.swing.JLabel();
         labelCpf1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        displayDepSac = new javax.swing.JPanel();
+        txtValorTroca1 = new javax.swing.JTextField();
+        labelValorTroca1 = new javax.swing.JLabel();
+        btDepositar = new javax.swing.JButton();
+        btSacar = new javax.swing.JButton();
 
         txtCpf.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtCpf.setVerifyInputWhenFocusTarget(false);
@@ -618,6 +641,9 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
         painelMoedas.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         painelMoedas.setEnabled(false);
+        painelMoedas.setMaximumSize(new java.awt.Dimension(305, 730));
+        painelMoedas.setMinimumSize(new java.awt.Dimension(305, 730));
+        painelMoedas.setPreferredSize(new java.awt.Dimension(305, 730));
 
         labelCotações.setFont(new java.awt.Font("Cantarell", 1, 15)); // NOI18N
         labelCotações.setText("Cotações");
@@ -661,86 +687,157 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        labelNome.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        labelNome.setText("Nome: XXXXXXXXXXXXXXXXXXXXXX");
+
+        labelCpf.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        labelCpf.setText("CPF: XXX.XXX.XXX-X");
+
+        labelSaldoTotal2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        labelSaldoTotal2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        labelSaldoTotal2.setText("Saldo Total: R$ XXX");
+
+        labelSaldoReais.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        labelSaldoReais.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        labelSaldoReais.setText("R$: XXX");
+
+        labelSaldoBtc.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        labelSaldoBtc.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        labelSaldoBtc.setText("BTC: XXX");
+
+        labelSaldoEth.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        labelSaldoEth.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        labelSaldoEth.setText("ETH: XXX");
+
+        labelSaldoXrp.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        labelSaldoXrp.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        labelSaldoXrp.setText("XRP: XXX");
+
+        labelCarteira.setFont(new java.awt.Font("Cantarell", 1, 15)); // NOI18N
+        labelCarteira.setText("Carteira");
+
         javax.swing.GroupLayout painelMoedasLayout = new javax.swing.GroupLayout(painelMoedas);
         painelMoedas.setLayout(painelMoedasLayout);
         painelMoedasLayout.setHorizontalGroup(
             painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelMoedasLayout.createSequentialGroup()
-                .addGap(0, 22, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(painelMoedasLayout.createSequentialGroup()
+                        .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelXrp)
+                            .addGroup(painelMoedasLayout.createSequentialGroup()
+                                .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(labelEth)
+                                    .addComponent(labelBtc))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(labelValorBtc, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(indexXrp, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(indexBtc, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(painelMoedasLayout.createSequentialGroup()
+                        .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(labelValorXrp, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelValorEth, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(indexEth, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(26, 26, 26))
+            .addGroup(painelMoedasLayout.createSequentialGroup()
                 .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelMoedasLayout.createSequentialGroup()
-                        .addComponent(labelXrp)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(labelValorXrp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelMoedasLayout.createSequentialGroup()
-                        .addComponent(labelEth)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(labelValorEth, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelMoedasLayout.createSequentialGroup()
-                        .addComponent(labelBtc)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(labelValorBtc, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(indexXrp, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(indexEth, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(indexBtc, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(26, 26, 26))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelMoedasLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelMoedasLayout.createSequentialGroup()
-                        .addComponent(labelCotações)
-                        .addGap(116, 116, 116))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelMoedasLayout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(120, 120, 120))))
+                        .addGap(122, 122, 122)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(painelMoedasLayout.createSequentialGroup()
+                        .addGap(118, 118, 118)
+                        .addComponent(labelCotações))
+                    .addGroup(painelMoedasLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(labelNome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(labelCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(painelMoedasLayout.createSequentialGroup()
+                                .addGap(1, 1, 1)
+                                .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelMoedasLayout.createSequentialGroup()
+                                        .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(labelSaldoEth, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(labelSaldoBtc, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(labelSaldoReais, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(108, 108, 108))
+                                    .addComponent(labelSaldoTotal2, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(labelSaldoXrp, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(painelMoedasLayout.createSequentialGroup()
+                        .addGap(111, 111, 111)
+                        .addComponent(labelCarteira)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jSeparator1)
         );
         painelMoedasLayout.setVerticalGroup(
             painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelMoedasLayout.createSequentialGroup()
-                .addGap(12, 12, 12)
+                .addGap(18, 18, 18)
+                .addComponent(labelCarteira)
+                .addGap(8, 8, 8)
+                .addComponent(labelNome, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelSaldoTotal2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(labelSaldoReais, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelSaldoBtc, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelSaldoEth, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelSaldoXrp, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelCotações)
-                .addGap(116, 116, 116)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(indexBtc, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(labelBtc)
                         .addComponent(labelValorBtc)))
-                .addGap(116, 116, 116)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(labelEth)
                         .addComponent(labelValorEth))
                     .addComponent(indexEth, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(116, 116, 116)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(labelXrp)
                         .addComponent(labelValorXrp))
                     .addComponent(indexXrp, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(60, 60, 60))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        labelSaldoTotal.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        labelSaldoTotal.setText("Seu saldo: R$ XXX");
-
         opcMoedaTroca.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         opcMoedaTroca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BTC", "ETH", "XRP" }));
+        opcMoedaTroca.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                opcMoedaTrocaItemStateChanged(evt);
+            }
+        });
 
-        labelSaldoEspecífico.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        labelSaldoEspecífico.setText("Saldo Atual: X.XXXXX (R$ XXX)");
+        labelSaldoEspecifico.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        labelSaldoEspecifico.setText("Saldo Atual: X.XXXXX (R$ XXX)");
 
         txtValorTroca.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         txtValorTroca.setText("XXXXXX");
 
-        labelSaldoEspecífico1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        labelSaldoEspecífico1.setText("Quantidade a ser comprada/vendida:");
+        labelSaldoEspecifico1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        labelSaldoEspecifico1.setText("Quantidade a ser comprada/vendida:");
 
         labelValorTroca.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         labelValorTroca.setText("R$");
@@ -763,14 +860,11 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             .addGroup(displayTradeLayout.createSequentialGroup()
                 .addGroup(displayTradeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(displayTradeLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(labelSaldoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(displayTradeLayout.createSequentialGroup()
                         .addGap(415, 415, 415)
                         .addComponent(opcMoedaTroca, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(displayTradeLayout.createSequentialGroup()
                         .addGap(293, 293, 293)
-                        .addComponent(labelSaldoEspecífico, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(labelSaldoEspecifico, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(displayTradeLayout.createSequentialGroup()
                         .addGap(381, 381, 381)
                         .addComponent(labelValorTroca)
@@ -783,21 +877,19 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                                 .addComponent(btComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btVender, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(labelSaldoEspecífico1, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(labelSaldoEspecifico1, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(260, Short.MAX_VALUE))
         );
         displayTradeLayout.setVerticalGroup(
             displayTradeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(displayTradeLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(labelSaldoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(72, 72, 72)
+                .addGap(111, 111, 111)
                 .addComponent(opcMoedaTroca, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(63, 63, 63)
-                .addComponent(labelSaldoEspecífico, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(labelSaldoEspecifico, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
-                .addComponent(labelSaldoEspecífico1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(55, 55, 55)
+                .addComponent(labelSaldoEspecifico1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
                 .addGroup(displayTradeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtValorTroca, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelValorTroca))
@@ -805,150 +897,10 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                 .addGroup(displayTradeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btVender, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(159, Short.MAX_VALUE))
+                .addContainerGap(189, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Comprar/Vender", displayTrade);
-
-        labelSaldoTotal1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        labelSaldoTotal1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelSaldoTotal1.setText("Seu saldo: R$ XXXXXX");
-        labelSaldoTotal1.setToolTipText("");
-
-        txtValorTroca1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
-        txtValorTroca1.setText("XXXXXX");
-
-        labelValorTroca1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        labelValorTroca1.setText("R$");
-
-        btDepositar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btDepositar.setText("Depositar");
-        btDepositar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btDepositarActionPerformed(evt);
-            }
-        });
-
-        btSacar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btSacar.setText("Sacar");
-        btSacar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btSacarActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout displayDepSacLayout = new javax.swing.GroupLayout(displayDepSac);
-        displayDepSac.setLayout(displayDepSacLayout);
-        displayDepSacLayout.setHorizontalGroup(
-            displayDepSacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, displayDepSacLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(labelSaldoTotal1)
-                .addGap(290, 290, 290))
-            .addGroup(displayDepSacLayout.createSequentialGroup()
-                .addGroup(displayDepSacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(displayDepSacLayout.createSequentialGroup()
-                        .addGap(374, 374, 374)
-                        .addComponent(labelValorTroca1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtValorTroca1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(displayDepSacLayout.createSequentialGroup()
-                        .addGap(268, 268, 268)
-                        .addComponent(btDepositar, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
-                        .addComponent(btSacar, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(273, Short.MAX_VALUE))
-        );
-        displayDepSacLayout.setVerticalGroup(
-            displayDepSacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(displayDepSacLayout.createSequentialGroup()
-                .addGap(210, 210, 210)
-                .addComponent(labelSaldoTotal1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(63, 63, 63)
-                .addGroup(displayDepSacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtValorTroca1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelValorTroca1))
-                .addGap(101, 101, 101)
-                .addGroup(displayDepSacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btDepositar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btSacar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(196, Short.MAX_VALUE))
-        );
-
-        jTabbedPane1.addTab("Depositar/Sacar", displayDepSac);
-
-        labelNome.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        labelNome.setText("Nome: XXXXXXXXXXXXXXXXXXXXXX");
-
-        labelCpf.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        labelCpf.setText("CPF: XXX.XXX.XXX-X");
-
-        labelSaldoTotal2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        labelSaldoTotal2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelSaldoTotal2.setText("Saldo Total: R$ XXX");
-
-        labelSaldoReais.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        labelSaldoReais.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelSaldoReais.setText("R$: XXX");
-
-        labelSaldoBtc.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        labelSaldoBtc.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelSaldoBtc.setText("BTC: XXX");
-
-        labelSaldoEth.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        labelSaldoEth.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelSaldoEth.setText("ETH: XXX");
-
-        labelSaldoXrp.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        labelSaldoXrp.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelSaldoXrp.setText("XRP: XXX");
-
-        javax.swing.GroupLayout displayCarteiraLayout = new javax.swing.GroupLayout(displayCarteira);
-        displayCarteira.setLayout(displayCarteiraLayout);
-        displayCarteiraLayout.setHorizontalGroup(
-            displayCarteiraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(displayCarteiraLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(displayCarteiraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelNome, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, displayCarteiraLayout.createSequentialGroup()
-                .addContainerGap(335, Short.MAX_VALUE)
-                .addComponent(labelSaldoTotal2, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(335, 335, 335))
-            .addGroup(displayCarteiraLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(displayCarteiraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelSaldoReais, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelSaldoBtc, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelSaldoEth, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelSaldoXrp, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        displayCarteiraLayout.setVerticalGroup(
-            displayCarteiraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(displayCarteiraLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(labelNome, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(60, 60, 60)
-                .addComponent(labelSaldoTotal2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(60, 60, 60)
-                .addComponent(labelSaldoReais, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(60, 60, 60)
-                .addComponent(labelSaldoBtc, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(60, 60, 60)
-                .addComponent(labelSaldoEth, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(60, 60, 60)
-                .addComponent(labelSaldoXrp, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(149, Short.MAX_VALUE))
-        );
-
-        jTabbedPane1.addTab("Carteira", displayCarteira);
-        displayCarteira.getAccessibleContext().setAccessibleName("");
-        displayCarteira.getAccessibleContext().setAccessibleDescription("");
 
         displayExtrato.setEnabled(false);
 
@@ -1020,6 +972,62 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Extrato", displayExtrato);
 
+        txtValorTroca1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
+        txtValorTroca1.setText("XXXXXX");
+
+        labelValorTroca1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        labelValorTroca1.setText("R$");
+
+        btDepositar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btDepositar.setText("Depositar");
+        btDepositar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btDepositarActionPerformed(evt);
+            }
+        });
+
+        btSacar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btSacar.setText("Sacar");
+        btSacar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSacarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout displayDepSacLayout = new javax.swing.GroupLayout(displayDepSac);
+        displayDepSac.setLayout(displayDepSacLayout);
+        displayDepSacLayout.setHorizontalGroup(
+            displayDepSacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(displayDepSacLayout.createSequentialGroup()
+                .addGroup(displayDepSacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(displayDepSacLayout.createSequentialGroup()
+                        .addGap(376, 376, 376)
+                        .addComponent(labelValorTroca1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtValorTroca1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(displayDepSacLayout.createSequentialGroup()
+                        .addGap(271, 271, 271)
+                        .addComponent(btDepositar, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
+                        .addComponent(btSacar, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(271, Short.MAX_VALUE))
+        );
+        displayDepSacLayout.setVerticalGroup(
+            displayDepSacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(displayDepSacLayout.createSequentialGroup()
+                .addGap(240, 240, 240)
+                .addGroup(displayDepSacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtValorTroca1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelValorTroca1))
+                .addGap(150, 150, 150)
+                .addGroup(displayDepSacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btDepositar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btSacar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(218, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Depositar/Sacar", displayDepSac);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -1053,33 +1061,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoLoginActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        control.atualizaCt();
-        this.auxTotal = usuario.getBtc().getQtd() * control.getCtBtc() + 
-                        usuario.getEth().getQtd() * control.getCtEth() +
-                        usuario.getXrp().getQtd() * control.getCtXrp();
-        DecimalFormat df = new DecimalFormat("#.##");
-        String btcFormatado = df.format(control.getCtBtc());
-        String ethFormatado = df.format(control.getCtEth());
-        String xrpFormatado = df.format(control.getCtXrp());
-        String totalFormatado = df.format(this.auxTotal);
-        if (control.getAuxCtBtc() >= 1){
-            this.indexBtc.setForeground(Color.green);} 
-        else {
-            this.indexBtc.setForeground(Color.red);}
-        if (control.getAuxCtEth() >= 1){
-            this.indexEth.setForeground(Color.green);} 
-        else {
-            this.indexEth.setForeground(Color.red);}
-        if (control.getAuxCtXrp() >= 1){
-            this.indexXrp.setForeground(Color.green);} 
-        else {
-            this.indexXrp.setForeground(Color.red);}
-        this.labelValorBtc.setText("" + btcFormatado);
-        this.labelValorEth.setText("" + ethFormatado);
-        this.labelValorXrp.setText("" + xrpFormatado);
-        this.labelSaldoTotal.setText("Seu saldo: R$" + totalFormatado);
-        this.labelSaldoTotal1.setText(this.labelSaldoTotal.getText());
-        this.labelSaldoTotal2.setText("Saldo total: R$" + totalFormatado);
+        control.atualizaCt(usuario);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtCpfFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCpfFocusGained
@@ -1121,6 +1103,10 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     private void btSacarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSacarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btSacarActionPerformed
+
+    private void opcMoedaTrocaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_opcMoedaTrocaItemStateChanged
+        control.trocaMoedaTrade(opcMoedaTroca.getSelectedIndex(), usuario);
+    }//GEN-LAST:event_opcMoedaTrocaItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -1170,7 +1156,6 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btSacar;
     private javax.swing.JButton btVender;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JPanel displayCarteira;
     private javax.swing.JPanel displayDepSac;
     private javax.swing.JPanel displayExtrato;
     private javax.swing.JPanel displayTrade;
@@ -1181,9 +1166,11 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel labelBtc;
+    private javax.swing.JLabel labelCarteira;
     private javax.swing.JLabel labelCotações;
     private javax.swing.JLabel labelCpf;
     private javax.swing.JLabel labelCpf1;
@@ -1191,12 +1178,10 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel labelNome;
     private javax.swing.JLabel labelNome1;
     private javax.swing.JLabel labelSaldoBtc;
-    private javax.swing.JLabel labelSaldoEspecífico;
-    private javax.swing.JLabel labelSaldoEspecífico1;
+    private javax.swing.JLabel labelSaldoEspecifico;
+    private javax.swing.JLabel labelSaldoEspecifico1;
     private javax.swing.JLabel labelSaldoEth;
     private javax.swing.JLabel labelSaldoReais;
-    private javax.swing.JLabel labelSaldoTotal;
-    private javax.swing.JLabel labelSaldoTotal1;
     private javax.swing.JLabel labelSaldoTotal2;
     private javax.swing.JLabel labelSaldoXrp;
     private javax.swing.JLabel labelValorBtc;

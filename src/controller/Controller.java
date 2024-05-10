@@ -5,11 +5,13 @@
 package controller;
 import DAO.Conexao;
 import DAO.UsuarioDAO;
+import java.awt.Color;
 import model.Usuario;
 import view.JanelaPrincipal;
 import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.text.DecimalFormat;
 import javax.swing.JOptionPane;
 import model.Bitcoin;
 import model.Ethereum;
@@ -25,6 +27,7 @@ public class Controller {
     private JanelaLogin janelaLogin;
     private double ctBtc, ctEth, ctXrp, auxCtBtc, auxCtEth, auxCtXrp;
     private Random random;
+    public DecimalFormat df = new DecimalFormat("#.##");
 //    public Controller(JanelaPrincipal janelaPrincipal){
 //        this.janelaPrincipal = janelaPrincipal;
 //    }
@@ -119,13 +122,55 @@ public class Controller {
         }
     }
     
-    public void atualizaCt(){
+    public void atualizaCt(Usuario usuario){
         this.auxCtBtc = random.nextDouble(0.8, 1.2);
         this.auxCtEth = random.nextDouble(0.8, 1.2);
         this.auxCtXrp = random.nextDouble(0.8, 1.2);
         this.ctBtc = this.ctBtc * auxCtBtc;
         this.ctEth = this.ctEth * auxCtEth;
         this.ctXrp = this.ctXrp * auxCtXrp;
+        Double auxTotal = usuario.getBtc().getQtd() * ctBtc + 
+                        usuario.getEth().getQtd() * ctEth +
+                        usuario.getXrp().getQtd() * ctXrp;
+        String btcFormatado = df.format(ctBtc);
+        String ethFormatado = df.format(ctEth);
+        String xrpFormatado = df.format(ctXrp);
+        String totalFormatado = df.format(auxTotal);
+        if (auxCtBtc >= 1){
+            janelaPrincipal.getIndexBtc().setForeground(Color.green);} 
+        else {
+            janelaPrincipal.getIndexBtc().setForeground(Color.red);}
+        if (auxCtEth>= 1){
+            janelaPrincipal.getIndexEth().setForeground(Color.green);} 
+        else {
+            janelaPrincipal.getIndexEth().setForeground(Color.red);}
+        if (auxCtXrp >= 1){
+            janelaPrincipal.getIndexXrp().setForeground(Color.green);} 
+        else {
+            janelaPrincipal.getIndexXrp().setForeground(Color.red);}
+            janelaPrincipal.getLabelValorBtc().setText("" + btcFormatado);
+            janelaPrincipal.getLabelValorEth().setText("" + ethFormatado);
+            janelaPrincipal.getLabelValorXrp().setText("" + xrpFormatado);
+            janelaPrincipal.getLabelSaldoTotal2().setText("Saldo total: R$" + 
+                                                                totalFormatado);
+    }
+    
+    public void trocaMoedaTrade(int opcMoeda, Usuario usuario){
+        if (opcMoeda == 0){
+            Double qtdBtc = usuario.getBtc().getQtd();
+            janelaPrincipal.getLabelSaldoEspecífico().setText("Saldo atual: " +
+                               qtdBtc + " (R$" + df.format(qtdBtc * ctBtc)+")");
+        }
+        if (opcMoeda == 1){
+            Double qtdEth = usuario.getEth().getQtd();
+            janelaPrincipal.getLabelSaldoEspecífico().setText("Saldo atual: " +
+                               qtdEth + " (R$" + df.format(qtdEth * ctEth)+")");
+        }
+        if (opcMoeda == 2){
+            Double qtdXrp = usuario.getXrp().getQtd();
+            janelaPrincipal.getLabelSaldoEspecífico().setText("Saldo atual: " +
+                               qtdXrp + " (R$" + df.format(qtdXrp * ctXrp)+")");
+        }
     }
     
 }

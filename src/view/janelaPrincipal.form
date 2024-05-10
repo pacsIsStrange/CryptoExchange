@@ -124,9 +124,6 @@
     <Property name="bounds" type="java.awt.Rectangle" editor="org.netbeans.beaninfo.editors.RectangleEditor">
       <Rectangle value="[0, 0, 1280, 720]"/>
     </Property>
-    <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[1280, 720]"/>
-    </Property>
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[1280, 720]"/>
     </Property>
@@ -208,10 +205,10 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                      <Component id="jProgressBar3" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="indexXrp" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
                       <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                          <Component id="jProgressBar2" min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="jProgressBar1" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="indexEth" min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="indexBtc" min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
@@ -238,7 +235,7 @@
                   <Component id="labelCotações" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="116" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jProgressBar1" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="indexBtc" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="labelBtc" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="labelValorBtc" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -250,7 +247,7 @@
                           <Component id="labelEth" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="labelValorEth" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jProgressBar2" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="indexEth" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="116" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
@@ -258,7 +255,7 @@
                           <Component id="labelXrp" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="labelValorXrp" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jProgressBar3" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="indexXrp" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
                   <Component id="jButton1" min="-2" pref="60" max="-2" attributes="0"/>
@@ -318,7 +315,7 @@
             <Property name="text" type="java.lang.String" value="XRP:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JProgressBar" name="jProgressBar1">
+        <Component class="javax.swing.JProgressBar" name="indexBtc">
           <Properties>
             <Property name="value" type="int" value="100"/>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -336,13 +333,13 @@
             <Property name="text" type="java.lang.String" value="XXXXX"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JProgressBar" name="jProgressBar2">
+        <Component class="javax.swing.JProgressBar" name="indexEth">
           <Properties>
             <Property name="value" type="int" value="100"/>
             <Property name="focusable" type="boolean" value="false"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JProgressBar" name="jProgressBar3">
+        <Component class="javax.swing.JProgressBar" name="indexXrp">
           <Properties>
             <Property name="value" type="int" value="100"/>
             <Property name="focusable" type="boolean" value="false"/>

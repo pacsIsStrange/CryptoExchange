@@ -23,7 +23,7 @@ import java.util.Random;
 public class Controller {
     private JanelaPrincipal janelaPrincipal;
     private JanelaLogin janelaLogin;
-    private double ctBtc, ctEth, ctXrp;
+    private double ctBtc, ctEth, ctXrp, auxCtBtc, auxCtEth, auxCtXrp;
     private Random random;
 //    public Controller(JanelaPrincipal janelaPrincipal){
 //        this.janelaPrincipal = janelaPrincipal;
@@ -52,6 +52,32 @@ public class Controller {
     public void setCtXrp(double ctXrp) {
         this.ctXrp = ctXrp;
     }
+
+    public double getAuxCtBtc() {
+        return auxCtBtc;
+    }
+
+    public void setAuxCtBtc(double auxCtBtc) {
+        this.auxCtBtc = auxCtBtc;
+    }
+
+    public double getAuxCtEth() {
+        return auxCtEth;
+    }
+
+    public void setAuxCtEth(double auxCtEth) {
+        this.auxCtEth = auxCtEth;
+    }
+
+    public double getAuxCtXrp() {
+        return auxCtXrp;
+    }
+
+    public void setAuxCtXrp(double auxCtXrp) {
+        this.auxCtXrp = auxCtXrp;
+    }
+    
+    
     
     public Controller(JanelaLogin janelaLogin) {
         this.janelaLogin = janelaLogin;
@@ -94,9 +120,12 @@ public class Controller {
     }
     
     public void atualizaCt(){
-        this.ctBtc = this.ctBtc * random.nextDouble(0.8, 1.2);
-        this.ctEth = this.ctEth * random.nextDouble(0.8, 1.2);
-        this.ctXrp = this.ctXrp * random.nextDouble(0.8, 1.2);
+        this.auxCtBtc = random.nextDouble(0.8, 1.2);
+        this.auxCtEth = random.nextDouble(0.8, 1.2);
+        this.auxCtXrp = random.nextDouble(0.8, 1.2);
+        this.ctBtc = this.ctBtc * auxCtBtc;
+        this.ctEth = this.ctEth * auxCtEth;
+        this.ctXrp = this.ctXrp * auxCtXrp;
     }
     
 }

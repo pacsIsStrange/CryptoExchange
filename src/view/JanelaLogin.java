@@ -198,7 +198,7 @@ public class JanelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_txtSenhaPropertyChange
 
     private void botaoLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLoginActionPerformed
-        // TODO add your handling code here:
+        control.loginUsuario();
     }//GEN-LAST:event_botaoLoginActionPerformed
 
     

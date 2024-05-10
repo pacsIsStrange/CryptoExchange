@@ -11,7 +11,11 @@ import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
+import model.Bitcoin;
+import model.Ethereum;
+import model.Ripple;
 import view.JanelaLogin;
+import java.util.Random;
 /**
  *
  * @author Pedro Alexandre
@@ -19,19 +23,49 @@ import view.JanelaLogin;
 public class Controller {
     private JanelaPrincipal janelaPrincipal;
     private JanelaLogin janelaLogin;
-    
-    public Controller(JanelaPrincipal janelaPrincipal){
-        this.janelaPrincipal = janelaPrincipal;
+    private double ctBtc, ctEth, ctXrp;
+    private Random random;
+//    public Controller(JanelaPrincipal janelaPrincipal){
+//        this.janelaPrincipal = janelaPrincipal;
+//    }
+
+    public double getCtBtc() {
+        return ctBtc;
     }
 
+    public void setCtBtc(double ctBtc) {
+        this.ctBtc = ctBtc;
+    }
+
+    public double getCtEth() {
+        return ctEth;
+    }
+
+    public void setCtEth(double ctEth) {
+        this.ctEth = ctEth;
+    }
+
+    public double getCtXrp() {
+        return ctXrp;
+    }
+
+    public void setCtXrp(double ctXrp) {
+        this.ctXrp = ctXrp;
+    }
+    
     public Controller(JanelaLogin janelaLogin) {
         this.janelaLogin = janelaLogin;
+        this.random = new Random();
+        
+        this.ctBtc = random.nextDouble(1.0, 150.0);
+        this.ctEth = random.nextDouble(1.0, 150.0);
+        this.ctXrp = random.nextDouble(1.0, 150.0);
     }
     
     public void loginUsuario(){
         Usuario usuario = new Usuario(janelaLogin.getTxtCpf().getText(), 
                                       janelaLogin.getTxtSenha().getText(), 
-                                      null, null, null, null);
+                                      null, null, null, null, 0);
         Conexao conexao = new Conexao();
         try{
             Connection conn = conexao.getConnection();
@@ -40,13 +74,29 @@ public class Controller {
             if (
                 res.next()){JOptionPane.showMessageDialog(janelaLogin, "Login realizado com sucesso.");
                 janelaLogin.setVisible(false);
+                usuario.setNome(res.getString("nome"));
+                usuario.setBtc(new Bitcoin()); usuario.setEth(new Ethereum());
+                usuario.setXrp(new Ripple());
+                usuario.getBtc().setQtd(res.getDouble("btc"));
+                usuario.getEth().setQtd(res.getDouble("eth"));
+                usuario.getXrp().setQtd(res.getDouble("xrp"));
+                usuario.setReais(res.getDouble("reais"));
+                System.out.println(usuario);
+                this.janelaPrincipal = new JanelaPrincipal(this, usuario);
                 janelaPrincipal.setVisible(true);
+                
             } else {
                 JOptionPane.showMessageDialog(janelaLogin, "CPF e/ou senha inválidos.");
             }
         }catch(SQLException e){
             JOptionPane.showMessageDialog(janelaLogin, "Não foi possível estabelecer a conexão.");
         }
+    }
+    
+    public void atualizaCt(){
+        this.ctBtc = this.ctBtc * random.nextDouble(0.8, 1.2);
+        this.ctEth = this.ctEth * random.nextDouble(0.8, 1.2);
+        this.ctXrp = this.ctXrp * random.nextDouble(0.8, 1.2);
     }
     
 }

@@ -17,6 +17,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
+import model.Usuario;
+import java.text.DecimalFormat;
 
 /**
  *
@@ -27,9 +29,32 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     /**
      * Creates new form janelaLogin
      */
-    public JanelaPrincipal() {
+    public JanelaPrincipal(Controller control, Usuario usuario) {
         initComponents();
-        control = new Controller(this);
+        this.usuario = usuario;
+        this.control = control;
+        this.labelNome.setText("Nome: " + usuario.getNome());
+        this.labelNome1.setText(labelNome.getText());
+        this.labelCpf.setText("CPF: " + usuario.getCpf());
+        this.labelCpf1.setText(this.labelCpf.getText());
+        this.labelSaldoReais.setText("R$: " + usuario.getReais());
+        this.labelSaldoBtc.setText("BTC: " + usuario.getBtc().getQtd());
+        this.labelSaldoEth.setText("ETH: " + usuario.getEth().getQtd());
+        this.labelSaldoXrp.setText("XRP: " + usuario.getXrp().getQtd());
+        this.auxTotal = usuario.getBtc().getQtd() * control.getCtBtc() + 
+                        usuario.getEth().getQtd() * control.getCtEth() +
+                        usuario.getXrp().getQtd() * control.getCtXrp();
+        DecimalFormat df = new DecimalFormat("#.##");
+        String btcFormatado = df.format(control.getCtBtc());
+        String ethFormatado = df.format(control.getCtEth());
+        String xrpFormatado = df.format(control.getCtXrp());
+        String totalFormatado = df.format(this.auxTotal);
+        this.labelValorBtc.setText(btcFormatado);
+        this.labelValorEth.setText(ethFormatado);
+        this.labelValorXrp.setText(xrpFormatado);
+        this.labelSaldoTotal.setText("Seu saldo: R$" + totalFormatado);
+        this.labelSaldoTotal1.setText(this.labelSaldoTotal.getText());
+        this.labelSaldoTotal2.setText("Saldo total: R$" + totalFormatado);
     }
 
     public Controller getControl() {
@@ -249,27 +274,27 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }
 
     public JLabel getLabelSaldoReais1() {
-        return labelSaldoReais1;
+        return labelSaldoBtc;
     }
 
     public void setLabelSaldoReais1(JLabel labelSaldoReais1) {
-        this.labelSaldoReais1 = labelSaldoReais1;
+        this.labelSaldoBtc = labelSaldoReais1;
     }
 
     public JLabel getLabelSaldoReais2() {
-        return labelSaldoReais2;
+        return labelSaldoEth;
     }
 
     public void setLabelSaldoReais2(JLabel labelSaldoReais2) {
-        this.labelSaldoReais2 = labelSaldoReais2;
+        this.labelSaldoEth = labelSaldoReais2;
     }
 
     public JLabel getLabelSaldoReais3() {
-        return labelSaldoReais3;
+        return labelSaldoXrp;
     }
 
     public void setLabelSaldoReais3(JLabel labelSaldoReais3) {
-        this.labelSaldoReais3 = labelSaldoReais3;
+        this.labelSaldoXrp = labelSaldoReais3;
     }
 
     public JLabel getLabelSaldoTotal() {
@@ -313,59 +338,59 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }
 
     public JLabel getLblBtc() {
-        return lblBtc;
+        return labelBtc;
     }
 
     public void setLblBtc(JLabel lblBtc) {
-        this.lblBtc = lblBtc;
+        this.labelBtc = lblBtc;
     }
 
     public JLabel getLblCotações() {
-        return lblCotações;
+        return labelCotações;
     }
 
     public void setLblCotações(JLabel lblCotações) {
-        this.lblCotações = lblCotações;
+        this.labelCotações = lblCotações;
     }
 
     public JLabel getLblEth() {
-        return lblEth;
+        return labelEth;
     }
 
     public void setLblEth(JLabel lblEth) {
-        this.lblEth = lblEth;
+        this.labelEth = lblEth;
     }
 
     public JLabel getLblValorBitcoin() {
-        return lblValorBitcoin;
+        return labelValorBtc;
     }
 
     public void setLblValorBitcoin(JLabel lblValorBitcoin) {
-        this.lblValorBitcoin = lblValorBitcoin;
+        this.labelValorBtc = lblValorBitcoin;
     }
 
     public JLabel getLblValorEth() {
-        return lblValorEth;
+        return labelValorEth;
     }
 
     public void setLblValorEth(JLabel lblValorEth) {
-        this.lblValorEth = lblValorEth;
+        this.labelValorEth = lblValorEth;
     }
 
     public JLabel getLblValorXrp() {
-        return lblValorXrp;
+        return labelValorXrp;
     }
 
     public void setLblValorXrp(JLabel lblValorXrp) {
-        this.lblValorXrp = lblValorXrp;
+        this.labelValorXrp = lblValorXrp;
     }
 
     public JLabel getLblXrp() {
-        return lblXrp;
+        return labelXrp;
     }
 
     public void setLblXrp(JLabel lblXrp) {
-        this.lblXrp = lblXrp;
+        this.labelXrp = lblXrp;
     }
 
     public JComboBox<String> getOpcMoedaTroca() {
@@ -444,14 +469,14 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         displayVazio = new javax.swing.JPanel();
         painelMoedas = new javax.swing.JPanel();
-        lblCotações = new javax.swing.JLabel();
-        lblBtc = new javax.swing.JLabel();
-        lblValorBitcoin = new javax.swing.JLabel();
-        lblEth = new javax.swing.JLabel();
-        lblValorEth = new javax.swing.JLabel();
-        lblXrp = new javax.swing.JLabel();
+        labelCotações = new javax.swing.JLabel();
+        labelBtc = new javax.swing.JLabel();
+        labelValorBtc = new javax.swing.JLabel();
+        labelEth = new javax.swing.JLabel();
+        labelValorEth = new javax.swing.JLabel();
+        labelXrp = new javax.swing.JLabel();
         jProgressBar1 = new javax.swing.JProgressBar();
-        lblValorXrp = new javax.swing.JLabel();
+        labelValorXrp = new javax.swing.JLabel();
         jProgressBar2 = new javax.swing.JProgressBar();
         jProgressBar3 = new javax.swing.JProgressBar();
         jButton1 = new javax.swing.JButton();
@@ -476,9 +501,9 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         labelCpf = new javax.swing.JLabel();
         labelSaldoTotal2 = new javax.swing.JLabel();
         labelSaldoReais = new javax.swing.JLabel();
-        labelSaldoReais1 = new javax.swing.JLabel();
-        labelSaldoReais2 = new javax.swing.JLabel();
-        labelSaldoReais3 = new javax.swing.JLabel();
+        labelSaldoBtc = new javax.swing.JLabel();
+        labelSaldoEth = new javax.swing.JLabel();
+        labelSaldoXrp = new javax.swing.JLabel();
         displayExtrato = new javax.swing.JPanel();
         labelNome1 = new javax.swing.JLabel();
         labelCpf1 = new javax.swing.JLabel();
@@ -594,35 +619,38 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         painelMoedas.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         painelMoedas.setEnabled(false);
 
-        lblCotações.setFont(new java.awt.Font("Cantarell", 1, 15)); // NOI18N
-        lblCotações.setText("Cotações");
+        labelCotações.setFont(new java.awt.Font("Cantarell", 1, 15)); // NOI18N
+        labelCotações.setText("Cotações");
 
-        lblBtc.setFont(new java.awt.Font("Cantarell", 1, 24)); // NOI18N
-        lblBtc.setText("BTC:");
+        labelBtc.setFont(new java.awt.Font("Cantarell", 1, 24)); // NOI18N
+        labelBtc.setText("BTC:");
 
-        lblValorBitcoin.setFont(new java.awt.Font("Cantarell", 0, 24)); // NOI18N
-        lblValorBitcoin.setText("XXXXX");
+        labelValorBtc.setFont(new java.awt.Font("Cantarell", 0, 24)); // NOI18N
+        labelValorBtc.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelValorBtc.setText("XXXXX");
 
-        lblEth.setFont(new java.awt.Font("Cantarell", 1, 24)); // NOI18N
-        lblEth.setText("ETH:");
+        labelEth.setFont(new java.awt.Font("Cantarell", 1, 24)); // NOI18N
+        labelEth.setText("ETH:");
 
-        lblValorEth.setFont(new java.awt.Font("Cantarell", 0, 24)); // NOI18N
-        lblValorEth.setText("XXXXX");
+        labelValorEth.setFont(new java.awt.Font("Cantarell", 0, 24)); // NOI18N
+        labelValorEth.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelValorEth.setText("XXXXX");
 
-        lblXrp.setFont(new java.awt.Font("Cantarell", 1, 24)); // NOI18N
-        lblXrp.setText("XRP:");
+        labelXrp.setFont(new java.awt.Font("Cantarell", 1, 24)); // NOI18N
+        labelXrp.setText("XRP:");
 
-        jProgressBar1.setValue(80);
+        jProgressBar1.setValue(100);
         jProgressBar1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jProgressBar1.setFocusable(false);
 
-        lblValorXrp.setFont(new java.awt.Font("Cantarell", 0, 24)); // NOI18N
-        lblValorXrp.setText("XXXXX");
+        labelValorXrp.setFont(new java.awt.Font("Cantarell", 0, 24)); // NOI18N
+        labelValorXrp.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelValorXrp.setText("XXXXX");
 
-        jProgressBar2.setValue(80);
+        jProgressBar2.setValue(100);
         jProgressBar2.setFocusable(false);
 
-        jProgressBar3.setValue(80);
+        jProgressBar3.setValue(100);
         jProgressBar3.setFocusable(false);
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/reload.png"))); // NOI18N
@@ -638,32 +666,32 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         painelMoedasLayout.setHorizontalGroup(
             painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelMoedasLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
+                .addGap(0, 22, Short.MAX_VALUE)
+                .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(painelMoedasLayout.createSequentialGroup()
+                        .addComponent(labelXrp)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelValorXrp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelMoedasLayout.createSequentialGroup()
+                        .addComponent(labelEth)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelValorEth, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelMoedasLayout.createSequentialGroup()
+                        .addComponent(labelBtc)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelValorBtc, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, painelMoedasLayout.createSequentialGroup()
-                        .addComponent(lblBtc)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblValorBitcoin)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(painelMoedasLayout.createSequentialGroup()
-                        .addComponent(lblXrp)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblValorXrp)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                        .addComponent(jProgressBar3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(painelMoedasLayout.createSequentialGroup()
-                        .addComponent(lblEth)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblValorEth)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(21, Short.MAX_VALUE))
+                    .addComponent(jProgressBar3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(26, 26, 26))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelMoedasLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelMoedasLayout.createSequentialGroup()
-                        .addComponent(lblCotações)
+                        .addComponent(labelCotações)
                         .addGap(116, 116, 116))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelMoedasLayout.createSequentialGroup()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -673,24 +701,24 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelMoedasLayout.createSequentialGroup()
                 .addGap(12, 12, 12)
-                .addComponent(lblCotações)
+                .addComponent(labelCotações)
                 .addGap(116, 116, 116)
                 .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblBtc)
-                        .addComponent(lblValorBitcoin)))
+                        .addComponent(labelBtc)
+                        .addComponent(labelValorBtc)))
                 .addGap(116, 116, 116)
                 .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblEth)
-                        .addComponent(lblValorEth))
+                        .addComponent(labelEth)
+                        .addComponent(labelValorEth))
                     .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(116, 116, 116)
                 .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblXrp)
-                        .addComponent(lblValorXrp))
+                        .addComponent(labelXrp)
+                        .addComponent(labelValorXrp))
                     .addComponent(jProgressBar3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -698,9 +726,6 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         );
 
         jTabbedPane1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jTabbedPane1.setEnabled(false);
-
-        displayTrade.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         labelSaldoTotal.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         labelSaldoTotal.setText("Seu saldo: R$ XXX");
@@ -759,7 +784,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btVender, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(labelSaldoEspecífico1, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(256, Short.MAX_VALUE))
+                .addContainerGap(260, Short.MAX_VALUE))
         );
         displayTradeLayout.setVerticalGroup(
             displayTradeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -780,12 +805,10 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                 .addGroup(displayTradeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btVender, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(155, Short.MAX_VALUE))
+                .addContainerGap(159, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Comprar/Vender", displayTrade);
-
-        displayDepSac.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         labelSaldoTotal1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         labelSaldoTotal1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -832,9 +855,9 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                     .addGroup(displayDepSacLayout.createSequentialGroup()
                         .addGap(268, 268, 268)
                         .addComponent(btDepositar, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
                         .addComponent(btSacar, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(271, Short.MAX_VALUE))
+                .addContainerGap(273, Short.MAX_VALUE))
         );
         displayDepSacLayout.setVerticalGroup(
             displayDepSacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -849,12 +872,10 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                 .addGroup(displayDepSacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btDepositar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btSacar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(192, Short.MAX_VALUE))
+                .addContainerGap(196, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Depositar/Sacar", displayDepSac);
-
-        displayCarteira.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         labelNome.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         labelNome.setText("Nome: XXXXXXXXXXXXXXXXXXXXXX");
@@ -870,17 +891,17 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         labelSaldoReais.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelSaldoReais.setText("R$: XXX");
 
-        labelSaldoReais1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        labelSaldoReais1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelSaldoReais1.setText("BTC: XXX");
+        labelSaldoBtc.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        labelSaldoBtc.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelSaldoBtc.setText("BTC: XXX");
 
-        labelSaldoReais2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        labelSaldoReais2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelSaldoReais2.setText("ETH: XXX");
+        labelSaldoEth.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        labelSaldoEth.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelSaldoEth.setText("ETH: XXX");
 
-        labelSaldoReais3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        labelSaldoReais3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelSaldoReais3.setText("XRP: XXX");
+        labelSaldoXrp.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        labelSaldoXrp.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelSaldoXrp.setText("XRP: XXX");
 
         javax.swing.GroupLayout displayCarteiraLayout = new javax.swing.GroupLayout(displayCarteira);
         displayCarteira.setLayout(displayCarteiraLayout);
@@ -893,16 +914,16 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                     .addComponent(labelCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, displayCarteiraLayout.createSequentialGroup()
-                .addContainerGap(331, Short.MAX_VALUE)
+                .addContainerGap(335, Short.MAX_VALUE)
                 .addComponent(labelSaldoTotal2, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(335, 335, 335))
             .addGroup(displayCarteiraLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(displayCarteiraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelSaldoReais, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelSaldoReais1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelSaldoReais2, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelSaldoReais3, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(labelSaldoBtc, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelSaldoEth, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelSaldoXrp, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         displayCarteiraLayout.setVerticalGroup(
@@ -917,19 +938,18 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                 .addGap(60, 60, 60)
                 .addComponent(labelSaldoReais, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60)
-                .addComponent(labelSaldoReais1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(labelSaldoBtc, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60)
-                .addComponent(labelSaldoReais2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(labelSaldoEth, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60)
-                .addComponent(labelSaldoReais3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(145, Short.MAX_VALUE))
+                .addComponent(labelSaldoXrp, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(149, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Carteira", displayCarteira);
         displayCarteira.getAccessibleContext().setAccessibleName("");
         displayCarteira.getAccessibleContext().setAccessibleDescription("");
 
-        displayExtrato.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         displayExtrato.setEnabled(false);
 
         labelNome1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -982,7 +1002,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                     .addComponent(labelCpf1, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, displayExtratoLayout.createSequentialGroup()
-                .addContainerGap(36, Short.MAX_VALUE)
+                .addContainerGap(40, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 884, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34))
         );
@@ -1033,7 +1053,21 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoLoginActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        control.atualizaCt();
+        this.auxTotal = usuario.getBtc().getQtd() * control.getCtBtc() + 
+                        usuario.getEth().getQtd() * control.getCtEth() +
+                        usuario.getXrp().getQtd() * control.getCtXrp();
+        DecimalFormat df = new DecimalFormat("#.##");
+        String btcFormatado = df.format(control.getCtBtc());
+        String ethFormatado = df.format(control.getCtEth());
+        String xrpFormatado = df.format(control.getCtXrp());
+        String totalFormatado = df.format(this.auxTotal);
+        this.labelValorBtc.setText("" + btcFormatado);
+        this.labelValorEth.setText("" + ethFormatado);
+        this.labelValorXrp.setText("" + xrpFormatado);
+        this.labelSaldoTotal.setText("Seu saldo: R$" + totalFormatado);
+        this.labelSaldoTotal1.setText(this.labelSaldoTotal.getText());
+        this.labelSaldoTotal2.setText("Saldo total: R$" + totalFormatado);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtCpfFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCpfFocusGained
@@ -1115,6 +1149,8 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 //    }
     
     private Controller control;
+    private double auxTotal;
+    private Usuario usuario;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoLogin;
     private javax.swing.JButton btComprar;
@@ -1135,28 +1171,28 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel labelBtc;
+    private javax.swing.JLabel labelCotações;
     private javax.swing.JLabel labelCpf;
     private javax.swing.JLabel labelCpf1;
+    private javax.swing.JLabel labelEth;
     private javax.swing.JLabel labelNome;
     private javax.swing.JLabel labelNome1;
+    private javax.swing.JLabel labelSaldoBtc;
     private javax.swing.JLabel labelSaldoEspecífico;
     private javax.swing.JLabel labelSaldoEspecífico1;
+    private javax.swing.JLabel labelSaldoEth;
     private javax.swing.JLabel labelSaldoReais;
-    private javax.swing.JLabel labelSaldoReais1;
-    private javax.swing.JLabel labelSaldoReais2;
-    private javax.swing.JLabel labelSaldoReais3;
     private javax.swing.JLabel labelSaldoTotal;
     private javax.swing.JLabel labelSaldoTotal1;
     private javax.swing.JLabel labelSaldoTotal2;
+    private javax.swing.JLabel labelSaldoXrp;
+    private javax.swing.JLabel labelValorBtc;
+    private javax.swing.JLabel labelValorEth;
     private javax.swing.JLabel labelValorTroca;
     private javax.swing.JLabel labelValorTroca1;
-    private javax.swing.JLabel lblBtc;
-    private javax.swing.JLabel lblCotações;
-    private javax.swing.JLabel lblEth;
-    private javax.swing.JLabel lblValorBitcoin;
-    private javax.swing.JLabel lblValorEth;
-    private javax.swing.JLabel lblValorXrp;
-    private javax.swing.JLabel lblXrp;
+    private javax.swing.JLabel labelValorXrp;
+    private javax.swing.JLabel labelXrp;
     private javax.swing.JComboBox<String> opcMoedaTroca;
     private javax.swing.JPanel painelLogin;
     private javax.swing.JPanel painelMoedas;

@@ -26,6 +26,8 @@ public class UsuarioDAO {
         statement.setString(2, usuario.getSenha());
         statement.execute();
         ResultSet resultado = statement.getResultSet();
+        // usuario.setCpf(sql);
+        System.out.println("resultado = " + resultado);
         return resultado;
     }
 }

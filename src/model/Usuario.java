@@ -13,17 +13,19 @@ public class Usuario {
     private Bitcoin btc;
     private Ethereum eth;
     private Ripple xrp;
+    private double reais;
 
     public Usuario() {
     }
 
-    public Usuario(String cpf, String senha, String nome, Bitcoin btc, Ethereum eth, Ripple xrp) {
+    public Usuario(String cpf, String senha, String nome, Bitcoin btc, Ethereum eth, Ripple xrp, double reais) {
         this.cpf = cpf;
         this.senha = senha;
         this.nome = nome;
         this.btc = btc;
         this.eth = eth;
         this.xrp = xrp;
+        this.reais = reais;
     }
     
     public String getCpf() {
@@ -74,4 +76,19 @@ public class Usuario {
         this.xrp = xrp;
     }
 
+    public double getReais() {
+        return reais;
+    }
+
+    public void setReais(double reais) {
+        this.reais = reais;
+    }
+    
+    @Override
+    public String toString() {
+        return "Usuario{" + "cpf=" + cpf + ", senha=" + senha + ", nome=" + nome + ", reais=" + reais + ", btc=" + btc.getQtd() + ", eth=" + eth.getQtd() + ", xrp=" + xrp.getQtd() + '}';
+    }
+
+     
+    
 }

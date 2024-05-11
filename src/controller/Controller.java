@@ -22,6 +22,8 @@ import java.util.Random;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import java.sql.ResultSetMetaData;
+import javax.swing.JLabel;
+import javax.swing.table.DefaultTableCellRenderer;
 /**
  *
  * @author Pedro Alexandre
@@ -126,7 +128,8 @@ public class Controller {
         }
     }
     
-    public void atualizaCt(Usuario usuario){
+    public void atualizaCt(JanelaPrincipal j){
+        Usuario usuario = j.getUsuario();
         this.auxCtBtc = random.nextDouble(0.8, 1.2);
         this.auxCtEth = random.nextDouble(0.8, 1.2);
         this.auxCtXrp = random.nextDouble(0.8, 1.2);
@@ -184,27 +187,34 @@ public class Controller {
             Connection conn = conexao.getConnection();
             ExtratoDAO dao = new ExtratoDAO(conn);
             ResultSet res = dao.consultar(j.getUsuario().getCpf());
-            System.out.println("extrato encontrado");
             DefaultTableModel modelo = new DefaultTableModel();
                 
             ResultSetMetaData metaData = res.getMetaData();
             int numColunas = metaData.getColumnCount();
-            for (int i = 1; i <= numColunas; i++){
+            for (int i = 2; i <= numColunas; i++){
                 modelo.addColumn(metaData.getColumnName(i));
             }
-            
+//            System.out.println("res.getRow() = " + res.getRow());
+//            System.out.println("res.isBeforeFirst() = " + res.isBeforeFirst());
+//            System.out.println("res.next() = " + res.next());
+//            res.beforeFirst();
             while (res.next()){
                 Object[] rowData = new Object[numColunas];
-                for (int i = 1; i <= numColunas; i++){
-                    rowData[i - 1] = res.getObject(i);
+                for (int i = 2; i <= numColunas; i++){
+                    rowData[i - 2] = res.getObject(i);
                 }
                 modelo.addRow(rowData);
             }
             
             tabela.setModel(modelo);
             
+            DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+            centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+            tabela.setDefaultRenderer(Object.class, centerRenderer);
+            
         }catch(SQLException e){
-            System.out.println("não foi possível obter o extrato");
+            // e.printStackTrace();
+            System.out.println("nao foi possivel obter o extrato");
         }
     }
     

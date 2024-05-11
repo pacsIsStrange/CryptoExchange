@@ -18,8 +18,3 @@ public class Conexao {
         return conexao;
     }
 }
-/**
- *
- * @author Pedro Alexandre
- */
-

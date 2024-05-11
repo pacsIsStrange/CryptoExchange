@@ -34,10 +34,10 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         
         this.usuario = usuario;
         this.control = control;
+        
+        control.preencherExtrato(this);
         this.labelNome.setText("Nome: " + usuario.getNome());
-        this.labelNome1.setText(labelNome.getText());
         this.labelCpf.setText("CPF: " + usuario.getCpf());
-        this.labelCpf1.setText(this.labelCpf.getText());
         this.labelSaldoReais.setText("R$: " + usuario.getReais());
         this.labelSaldoBtc.setText("BTC: " + qtdBtc);
         this.labelSaldoEth.setText("ETH: " + qtdEth);
@@ -234,14 +234,6 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         this.labelCpf = labelCpf;
     }
 
-    public JLabel getLabelCpf1() {
-        return labelCpf1;
-    }
-
-    public void setLabelCpf1(JLabel labelCpf1) {
-        this.labelCpf1 = labelCpf1;
-    }
-
     public JLabel getLabelNome() {
         return labelNome;
     }
@@ -250,13 +242,6 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         this.labelNome = labelNome;
     }
 
-    public JLabel getLabelNome1() {
-        return labelNome1;
-    }
-
-    public void setLabelNome1(JLabel labelNome1) {
-        this.labelNome1 = labelNome1;
-    }
 
     public JLabel getLabelSaldoEspecífico() {
         return labelSaldoEspecifico;
@@ -539,16 +524,14 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         labelValorTroca = new javax.swing.JLabel();
         btComprar = new javax.swing.JButton();
         btVender = new javax.swing.JButton();
-        displayExtrato = new javax.swing.JPanel();
-        labelNome1 = new javax.swing.JLabel();
-        labelCpf1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tabelaExtrato = new javax.swing.JTable();
         displayDepSac = new javax.swing.JPanel();
         txtValorTroca1 = new javax.swing.JTextField();
         labelValorTroca1 = new javax.swing.JLabel();
         btDepositar = new javax.swing.JButton();
         btSacar = new javax.swing.JButton();
+        displayExtrato = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tabelaExtrato = new javax.swing.JTable();
 
         txtCpf.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtCpf.setVerifyInputWhenFocusTarget(false);
@@ -920,53 +903,6 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Comprar/Vender", displayTrade);
 
-        displayExtrato.setEnabled(false);
-
-        labelNome1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        labelNome1.setText("Nome: XXXXXXXXXXXXXXXXXXXXXX");
-
-        labelCpf1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        labelCpf1.setText("CPF: XXX.XXX.XXX-X");
-
-        tabelaExtrato.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        jScrollPane1.setViewportView(tabelaExtrato);
-
-        javax.swing.GroupLayout displayExtratoLayout = new javax.swing.GroupLayout(displayExtrato);
-        displayExtrato.setLayout(displayExtratoLayout);
-        displayExtratoLayout.setHorizontalGroup(
-            displayExtratoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(displayExtratoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(displayExtratoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelNome1, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelCpf1, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, displayExtratoLayout.createSequentialGroup()
-                .addContainerGap(40, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 884, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34))
-        );
-        displayExtratoLayout.setVerticalGroup(
-            displayExtratoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(displayExtratoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(labelNome1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelCpf1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(81, 81, 81)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jTabbedPane1.addTab("Extrato", displayExtrato);
-
         txtValorTroca1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         txtValorTroca1.setText("XXXXXX");
 
@@ -1023,6 +959,41 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Depositar/Sacar", displayDepSac);
 
+        displayExtrato.setEnabled(false);
+
+        tabelaExtrato.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        tabelaExtrato.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        tabelaExtrato.setRowHeight(30);
+        tabelaExtrato.setShowGrid(true);
+        tabelaExtrato.setVerifyInputWhenFocusTarget(false);
+        jScrollPane1.setViewportView(tabelaExtrato);
+
+        javax.swing.GroupLayout displayExtratoLayout = new javax.swing.GroupLayout(displayExtrato);
+        displayExtrato.setLayout(displayExtratoLayout);
+        displayExtratoLayout.setHorizontalGroup(
+            displayExtratoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, displayExtratoLayout.createSequentialGroup()
+                .addContainerGap(37, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 884, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37))
+        );
+        displayExtratoLayout.setVerticalGroup(
+            displayExtratoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(displayExtratoLayout.createSequentialGroup()
+                .addGap(60, 60, 60)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 571, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(60, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Extrato", displayExtrato);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -1056,7 +1027,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoLoginActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        control.atualizaCt(usuario);
+        control.atualizaCt(this);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtCpfFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCpfFocusGained
@@ -1167,10 +1138,8 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel labelCarteira;
     private javax.swing.JLabel labelCotações;
     private javax.swing.JLabel labelCpf;
-    private javax.swing.JLabel labelCpf1;
     private javax.swing.JLabel labelEth;
     private javax.swing.JLabel labelNome;
-    private javax.swing.JLabel labelNome1;
     private javax.swing.JLabel labelSaldoBtc;
     private javax.swing.JLabel labelSaldoEspecifico;
     private javax.swing.JLabel labelSaldoEspecifico1;

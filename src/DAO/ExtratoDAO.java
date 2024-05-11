@@ -19,13 +19,13 @@ public class ExtratoDAO {
     }
     
     public ResultSet consultar(String cpfUsuario) throws SQLException {
-        String sql = "select * from op where cpfUsuario = ?";
+        String sql = "select * from op where cpf = ?";
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setString(1, cpfUsuario);
+        System.out.println("statement = " + statement);
         statement.execute();
         ResultSet resultado = statement.getResultSet();
-        // usuario.setCpf(sql);
-        System.out.println("resultado = " + resultado);
+        System.out.println("reultado = " + resultado);
         return resultado;
     }
 }

@@ -4,6 +4,7 @@
  */
 package controller;
 import DAO.Conexao;
+import DAO.ExtratoDAO;
 import DAO.UsuarioDAO;
 import java.awt.Color;
 import model.Usuario;
@@ -18,6 +19,9 @@ import model.Ethereum;
 import model.Ripple;
 import view.JanelaLogin;
 import java.util.Random;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import java.sql.ResultSetMetaData;
 /**
  *
  * @author Pedro Alexandre
@@ -170,6 +174,37 @@ public class Controller {
             Double qtdXrp = usuario.getXrp().getQtd();
             janelaPrincipal.getLabelSaldoEspecífico().setText("Saldo atual: " +
                                qtdXrp + " (R$" + df.format(qtdXrp * ctXrp)+")");
+        }
+    }
+ 
+    public void preencherExtrato(JanelaPrincipal j){
+        JTable tabela = j.getTabelaExtrato();
+        Conexao conexao = new Conexao();
+        try{
+            Connection conn = conexao.getConnection();
+            ExtratoDAO dao = new ExtratoDAO(conn);
+            ResultSet res = dao.consultar(j.getUsuario().getCpf());
+            System.out.println("extrato encontrado");
+            DefaultTableModel modelo = new DefaultTableModel();
+                
+            ResultSetMetaData metaData = res.getMetaData();
+            int numColunas = metaData.getColumnCount();
+            for (int i = 1; i <= numColunas; i++){
+                modelo.addColumn(metaData.getColumnName(i));
+            }
+            
+            while (res.next()){
+                Object[] rowData = new Object[numColunas];
+                for (int i = 1; i <= numColunas; i++){
+                    rowData[i - 1] = res.getObject(i);
+                }
+                modelo.addRow(rowData);
+            }
+            
+            tabela.setModel(modelo);
+            
+        }catch(SQLException e){
+            System.out.println("não foi possível obter o extrato");
         }
     }
     

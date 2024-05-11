@@ -82,6 +82,22 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         this.btComprar = btComprar;
     }
 
+    public JTable getTabelaExtrato() {
+        return tabelaExtrato;
+    }
+
+    public void setTabelaExtrato(JTable tabelaExtrato) {
+        this.tabelaExtrato = tabelaExtrato;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+    
     public JButton getBtDepositar() {
         return btDepositar;
     }
@@ -203,11 +219,11 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }
 
     public JTable getjTable1() {
-        return jTable1;
+        return tabelaExtrato;
     }
 
     public void setjTable1(JTable jTable1) {
-        this.jTable1 = jTable1;
+        this.tabelaExtrato = jTable1;
     }
 
     public JLabel getLabelCpf() {
@@ -527,7 +543,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         labelNome1 = new javax.swing.JLabel();
         labelCpf1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabelaExtrato = new javax.swing.JTable();
         displayDepSac = new javax.swing.JPanel();
         txtValorTroca1 = new javax.swing.JTextField();
         labelValorTroca1 = new javax.swing.JLabel();
@@ -721,33 +737,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         painelMoedasLayout.setHorizontalGroup(
             painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelMoedasLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(painelMoedasLayout.createSequentialGroup()
-                        .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelXrp)
-                            .addGroup(painelMoedasLayout.createSequentialGroup()
-                                .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(labelEth)
-                                    .addComponent(labelBtc))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(labelValorBtc, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(indexXrp, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(indexBtc, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(painelMoedasLayout.createSequentialGroup()
-                        .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(labelValorXrp, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(labelValorEth, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(indexEth, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(26, 26, 26))
-            .addGroup(painelMoedasLayout.createSequentialGroup()
                 .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(painelMoedasLayout.createSequentialGroup()
-                        .addGap(122, 122, 122)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(painelMoedasLayout.createSequentialGroup()
                         .addGap(118, 118, 118)
                         .addComponent(labelCotações))
@@ -773,6 +763,34 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                         .addComponent(labelCarteira)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jSeparator1)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelMoedasLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelMoedasLayout.createSequentialGroup()
+                        .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(painelMoedasLayout.createSequentialGroup()
+                                .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(labelXrp)
+                                    .addGroup(painelMoedasLayout.createSequentialGroup()
+                                        .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(labelEth)
+                                            .addComponent(labelBtc))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(labelValorBtc, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(18, 18, 18)
+                                .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(indexXrp, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(indexBtc, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(painelMoedasLayout.createSequentialGroup()
+                                .addGroup(painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(labelValorXrp, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(labelValorEth, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addComponent(indexEth, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(26, 26, 26))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelMoedasLayout.createSequentialGroup()
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(98, 98, 98))))
         );
         painelMoedasLayout.setVerticalGroup(
             painelMoedasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -815,9 +833,9 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                         .addComponent(labelXrp)
                         .addComponent(labelValorXrp))
                     .addComponent(indexXrp, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(39, 39, 39))
         );
 
         jTabbedPane1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -910,38 +928,15 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         labelCpf1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         labelCpf1.setText("CPF: XXX.XXX.XXX-X");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaExtrato.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null}
+
             },
             new String [] {
-                "Data", "Hora", "+/-", "Valor (R$)", "Moeda", "Cotação", "Taxa", "Saldo (R$)", "Saldo (BTC)", "Saldo (ETH)", "Saldo (XRP)"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false
-            };
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
             }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(jTable1);
+        ));
+        jScrollPane1.setViewportView(tabelaExtrato);
 
         javax.swing.GroupLayout displayExtratoLayout = new javax.swing.GroupLayout(displayExtrato);
         displayExtrato.setLayout(displayExtratoLayout);
@@ -1168,7 +1163,6 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel labelBtc;
     private javax.swing.JLabel labelCarteira;
     private javax.swing.JLabel labelCotações;
@@ -1193,6 +1187,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> opcMoedaTroca;
     private javax.swing.JPanel painelLogin;
     private javax.swing.JPanel painelMoedas;
+    private javax.swing.JTable tabelaExtrato;
     private javax.swing.JTextField txtCpf;
     private javax.swing.JTextField txtSenha;
     private javax.swing.JTextField txtValorTroca;

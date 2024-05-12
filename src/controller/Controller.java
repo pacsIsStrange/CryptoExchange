@@ -7,6 +7,7 @@ import DAO.Conexao;
 import DAO.ExtratoDAO;
 import DAO.UsuarioDAO;
 import java.awt.Color;
+import static java.lang.Double.parseDouble;
 import model.Usuario;
 import view.JanelaPrincipal;
 import java.sql.SQLException;
@@ -22,6 +23,8 @@ import java.util.Random;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import java.sql.ResultSetMetaData;
+import java.sql.PreparedStatement;
+import java.time.LocalDateTime;
 import javax.swing.JLabel;
 import javax.swing.table.DefaultTableCellRenderer;
 /**
@@ -162,7 +165,9 @@ public class Controller {
                                                                 totalFormatado);
     }
     
-    public void trocaMoedaTrade(int opcMoeda, Usuario usuario){
+    public void trocaMoedaTrade(JanelaPrincipal j){
+        int opcMoeda = j.getOpcMoedaTroca().getSelectedIndex();
+        Usuario usuario = j.getUsuario();
         if (opcMoeda == 0){
             Double qtdBtc = usuario.getBtc().getQtd();
             janelaPrincipal.getLabelSaldoEspecífico().setText("Saldo atual: " +
@@ -218,4 +223,115 @@ public class Controller {
         }
     }
     
+    public void escreveExtratoDepSac(String sinal, String moeda, double valor, 
+                                         Usuario usuario) throws SQLException{
+        Conexao conexao = new Conexao();
+        DecimalFormat min = new DecimalFormat("00"); // se minuto for 1 -> 01 ; 2 -> 02 ; 11 -> 11
+        String sql = "INSERT INTO op (cpf, 'Data', 'Hora', '+/-', 'Valor (R$)',"
+                   + " 'Moeda', 'Cotação', 'Taxa', 'Saldo (R$)', 'Saldo (BTC)',"
+                   + " 'Saldo (ETH)', 'Saldo (XRP)') VALUES (?, ?, ?, ?, ?, ?,"
+                   + " ?, ?, ?, ?, ?, ?)";
+        double ct;
+        switch (moeda){
+            case "BTC": ct = ctBtc; break;
+            case "ETH": ct = ctEth; break;
+            case "XRP": ct = ctXrp; break;
+            default: ct = 0;
+        }
+        System.out.println("moeda = " + moeda + " ct = " + ct);
+        
+        if(moeda.equals("btc")){ct = ctBtc;}
+        if(moeda.equals("eth")){ct = ctEth;}
+        if(moeda.equals("xrp")){ct = ctXrp;} else{ct = 0;}
+        
+        Connection conn = conexao.getConnection();
+        System.out.println("iii");
+        PreparedStatement statement = conn.prepareStatement(sql);
+        
+        LocalDateTime tempo = LocalDateTime.now();
+        System.out.println("hhh");
+        
+        int ano = tempo.getYear();
+        int mes = tempo.getMonthValue();
+        int dia = tempo.getDayOfMonth();
+        int hora = tempo.getHour();
+        int minuto = tempo.getMinute();
+
+        String data = ("" + dia + "-" + mes + "-" + ano);
+        String horario = ("" + hora + ":" + min.format(minuto));
+        
+        statement.setString(1, usuario.getCpf()); statement.setString(2, data);
+        statement.setString(3, horario); statement.setString(4, sinal);
+        statement.setDouble(5, valor); statement.setString(6, moeda);
+        statement.setDouble(7, ct); statement.setDouble(8, 0);
+        statement.setDouble(9, usuario.getReais());
+        statement.setDouble(10, usuario.getBtc().getQtd()); 
+        statement.setDouble(11, usuario.getEth().getQtd());
+        statement.setDouble(12, usuario.getXrp().getQtd()); 
+
+        statement.execute();
+    }
+    
+    public void escreveExtratoTrade(String sinal, String moeda, double valor, 
+                                         Usuario usuario) throws SQLException{
+        Conexao conexao = new Conexao();
+        String sql = "INSERT INTO op (cpf, 'Data', 'Hora', '+/-', 'Valor (R$)',"
+                   + " 'Moeda', 'Cotação', 'Taxa', 'Saldo (R$)', 'Saldo (BTC)',"
+                   + " 'Saldo (ETH)', 'Saldo (XRP)') VALUES (?, ?, ?, ?, ?, ?,"
+                   + " ?, ?, ?, ?, ?, ?)";
+        double ct, taxa;
+        if(moeda.equals("btc")){
+            ct = ctBtc;
+            if(sinal.equals('+')){
+                taxa = usuario.getBtc().getTaxaCompra();
+            } else {taxa = usuario.getBtc().getTaxaVenda();}
+        }
+        if(moeda.equals("eth")){
+            ct = ctEth;
+            if(sinal.equals('+')){
+                taxa = usuario.getEth().getTaxaCompra();
+            } else {taxa = usuario.getEth().getTaxaVenda();}
+        }
+        if(moeda.equals("xrp")){
+            ct = ctBtc;
+            if(sinal.equals('+')){
+                taxa = usuario.getXrp().getTaxaCompra();
+            } else {taxa = usuario.getXrp().getTaxaVenda();}
+        } else{ct = 0; taxa = 0;}
+        
+        Connection conn = conexao.getConnection();
+        PreparedStatement statement = conn.prepareStatement(sql);
+
+        LocalDateTime tempo = LocalDateTime.now();
+        int ano = tempo.getYear();
+        int mes = tempo.getMonthValue();
+        int dia = tempo.getDayOfMonth();
+        int hora = tempo.getHour();
+        int minuto = tempo.getMinute();
+
+        String data = ("" + dia + "-" + mes + "-" + ano);
+        String horario = ("" + hora + ":" + minuto);
+
+        statement.setString(1, usuario.getCpf()); statement.setString(2, data);
+        statement.setString(3, horario); statement.setString(4, sinal);
+        statement.setDouble(5, valor); statement.setString(6, moeda);
+        statement.setDouble(7, ct); statement.setDouble(8, taxa);
+        statement.setDouble(9, usuario.getReais());
+        statement.setDouble(10, usuario.getBtc().getQtd()); 
+        statement.setDouble(11, usuario.getEth().getQtd());
+        statement.setDouble(12, usuario.getXrp().getQtd()); 
+
+        statement.execute();
+        System.out.println("stmt executado");
+    }
+    
+    public void depositar(JanelaPrincipal j){
+        Usuario usuario = j.getUsuario();
+        double valorDeposito = parseDouble(j.getTxtValorDepSac().getText());
+        try {
+            escreveExtratoDepSac("+", "R$", valorDeposito, usuario);
+        } catch (SQLException e){
+            System.out.println("erro ao atualizar tabela: " + e.getMessage());
+        }
+    }
 }

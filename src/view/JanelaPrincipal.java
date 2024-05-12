@@ -420,11 +420,11 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }
 
     public JTextField getTxtValorTroca1() {
-        return txtValorTroca1;
+        return txtValorDepSac;
     }
 
     public void setTxtValorTroca1(JTextField txtValorTroca1) {
-        this.txtValorTroca1 = txtValorTroca1;
+        this.txtValorDepSac = txtValorTroca1;
     }
 
     public JProgressBar getIndexBtc() {
@@ -437,6 +437,14 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
     public JProgressBar getIndexEth() {
         return indexEth;
+    }
+
+    public JTextField getTxtValorDepSac() {
+        return txtValorDepSac;
+    }
+
+    public void setTxtValorDepSac(JTextField txtValorDepSac) {
+        this.txtValorDepSac = txtValorDepSac;
     }
 
     public void setIndexEth(JProgressBar indexEth) {
@@ -466,7 +474,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     public void setLabelValorEth(JLabel labelValorEth) {
         this.labelValorEth = labelValorEth;
     }
-
+    
     public JLabel getLabelValorXrp() {
         return labelValorXrp;
     }
@@ -525,7 +533,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         btComprar = new javax.swing.JButton();
         btVender = new javax.swing.JButton();
         displayDepSac = new javax.swing.JPanel();
-        txtValorTroca1 = new javax.swing.JTextField();
+        txtValorDepSac = new javax.swing.JTextField();
         labelValorTroca1 = new javax.swing.JLabel();
         btDepositar = new javax.swing.JButton();
         btSacar = new javax.swing.JButton();
@@ -830,6 +838,11 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                 opcMoedaTrocaItemStateChanged(evt);
             }
         });
+        opcMoedaTroca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opcMoedaTrocaActionPerformed(evt);
+            }
+        });
 
         labelSaldoEspecifico.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         labelSaldoEspecifico.setText("Saldo Atual: X.XXXXX (R$ XXX)");
@@ -903,8 +916,8 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Comprar/Vender", displayTrade);
 
-        txtValorTroca1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
-        txtValorTroca1.setText("XXXXXX");
+        txtValorDepSac.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
+        txtValorDepSac.setText("XXXXXX");
 
         labelValorTroca1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         labelValorTroca1.setText("R$");
@@ -935,7 +948,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                         .addGap(376, 376, 376)
                         .addComponent(labelValorTroca1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtValorTroca1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtValorDepSac, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(displayDepSacLayout.createSequentialGroup()
                         .addGap(271, 271, 271)
                         .addComponent(btDepositar, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -948,7 +961,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             .addGroup(displayDepSacLayout.createSequentialGroup()
                 .addGap(240, 240, 240)
                 .addGroup(displayDepSacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtValorTroca1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtValorDepSac, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelValorTroca1))
                 .addGap(150, 150, 150)
                 .addGroup(displayDepSacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1063,7 +1076,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btComprarActionPerformed
 
     private void btDepositarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDepositarActionPerformed
-        // TODO add your handling code here:
+        control.depositar(this);
     }//GEN-LAST:event_btDepositarActionPerformed
 
     private void btSacarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSacarActionPerformed
@@ -1071,8 +1084,12 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btSacarActionPerformed
 
     private void opcMoedaTrocaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_opcMoedaTrocaItemStateChanged
-        control.trocaMoedaTrade(opcMoedaTroca.getSelectedIndex(), usuario);
+        control.trocaMoedaTrade(this);
     }//GEN-LAST:event_opcMoedaTrocaItemStateChanged
+
+    private void opcMoedaTrocaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcMoedaTrocaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_opcMoedaTrocaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1159,7 +1176,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JTable tabelaExtrato;
     private javax.swing.JTextField txtCpf;
     private javax.swing.JTextField txtSenha;
+    private javax.swing.JTextField txtValorDepSac;
     private javax.swing.JTextField txtValorTroca;
-    private javax.swing.JTextField txtValorTroca1;
     // End of variables declaration//GEN-END:variables
 }

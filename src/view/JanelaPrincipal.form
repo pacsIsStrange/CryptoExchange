@@ -589,6 +589,7 @@
               </Properties>
               <Events>
                 <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="opcMoedaTrocaItemStateChanged"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="opcMoedaTrocaActionPerformed"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -665,7 +666,7 @@
                               <EmptySpace min="-2" pref="376" max="-2" attributes="0"/>
                               <Component id="labelValorTroca1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtValorTroca1" min="-2" pref="178" max="-2" attributes="0"/>
+                              <Component id="txtValorDepSac" min="-2" pref="178" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="271" max="-2" attributes="0"/>
@@ -683,7 +684,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="240" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="txtValorTroca1" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                          <Component id="txtValorDepSac" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                           <Component id="labelValorTroca1" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="150" max="-2" attributes="0"/>
@@ -697,7 +698,7 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JTextField" name="txtValorTroca1">
+            <Component class="javax.swing.JTextField" name="txtValorDepSac">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI Semibold" size="18" style="0"/>

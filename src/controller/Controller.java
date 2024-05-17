@@ -227,25 +227,25 @@ public class Controller {
                                          Usuario usuario) throws SQLException{
         Conexao conexao = new Conexao();
         DecimalFormat min = new DecimalFormat("00"); // se minuto for 1 -> 01 ; 2 -> 02 ; 11 -> 11
-        String sql = "INSERT INTO op (cpf, 'Data', 'Hora', '+/-', 'Valor (R$)',"
-                   + " 'Moeda', 'Cotação', 'Taxa', 'Saldo (R$)', 'Saldo (BTC)',"
-                   + " 'Saldo (ETH)', 'Saldo (XRP)') VALUES (?, ?, ?, ?, ?, ?,"
+        String sql = "INSERT INTO op (cpf, \"Data\", \"Hora\", \"+/-\", \"Valor (R$)\","
+                   + " \"Moeda\", \"Cotação\", \"Taxa\", \"Saldo (R$)\", \"Saldo (BTC)\","
+                   + " \"Saldo (ETH)\", \"Saldo (XRP)\") VALUES (?, ?, ?, ?, ?, ?,"
                    + " ?, ?, ?, ?, ?, ?)";
         double ct;
-        switch (moeda){
-            case "BTC": ct = ctBtc; break;
-            case "ETH": ct = ctEth; break;
-            case "XRP": ct = ctXrp; break;
-            default: ct = 0;
-        }
+        ct = switch (moeda) {
+            case "BTC" -> ctBtc;
+            case "ETH" -> ctEth;
+            case "XRP" -> ctXrp;
+            default -> 0;
+        };
         System.out.println("moeda = " + moeda + " ct = " + ct);
         
-        if(moeda.equals("btc")){ct = ctBtc;}
-        if(moeda.equals("eth")){ct = ctEth;}
-        if(moeda.equals("xrp")){ct = ctXrp;} else{ct = 0;}
+//        if(moeda.equals("btc")){ct = ctBtc;}
+//        if(moeda.equals("eth")){ct = ctEth;}
+//        if(moeda.equals("xrp")){ct = ctXrp;} else{ct = 0;}
         
         Connection conn = conexao.getConnection();
-        System.out.println("iii");
+//        System.out.println("iii");
         PreparedStatement statement = conn.prepareStatement(sql);
         
         LocalDateTime tempo = LocalDateTime.now();
@@ -256,7 +256,7 @@ public class Controller {
         int dia = tempo.getDayOfMonth();
         int hora = tempo.getHour();
         int minuto = tempo.getMinute();
-
+        
         String data = ("" + dia + "-" + mes + "-" + ano);
         String horario = ("" + hora + ":" + min.format(minuto));
         
@@ -275,29 +275,59 @@ public class Controller {
     public void escreveExtratoTrade(String sinal, String moeda, double valor, 
                                          Usuario usuario) throws SQLException{
         Conexao conexao = new Conexao();
-        String sql = "INSERT INTO op (cpf, 'Data', 'Hora', '+/-', 'Valor (R$)',"
-                   + " 'Moeda', 'Cotação', 'Taxa', 'Saldo (R$)', 'Saldo (BTC)',"
-                   + " 'Saldo (ETH)', 'Saldo (XRP)') VALUES (?, ?, ?, ?, ?, ?,"
+        String sql = "INSERT INTO op (cpf, \"Data\", \"Hora\", \"+/-\", \"Valor (R$)\","
+                   + " \"Moeda\", \"Cotação\", \"Taxa\", \"Saldo (R$)\", \"Saldo (BTC)\","
+                   + " \"Saldo (ETH)\", \"Saldo (XRP)\") VALUES (?, ?, ?, ?, ?, ?,"
                    + " ?, ?, ?, ?, ?, ?)";
         double ct, taxa;
-        if(moeda.equals("btc")){
-            ct = ctBtc;
-            if(sinal.equals('+')){
-                taxa = usuario.getBtc().getTaxaCompra();
-            } else {taxa = usuario.getBtc().getTaxaVenda();}
+        switch (moeda) {
+            case "btc" -> {
+                ct = ctBtc;
+                if (sinal.equals('+')) {
+                    taxa = usuario.getBtc().getTaxaCompra();
+                } else {
+                    taxa = usuario.getBtc().getTaxaVenda();
+                }
+            }
+            case "eth" -> {
+                ct = ctEth;
+                if (sinal.equals('+')) {
+                    taxa = usuario.getEth().getTaxaCompra();
+                } else {
+                    taxa = usuario.getEth().getTaxaVenda();
+                }
+            }
+            case "xrp" -> {
+                ct = ctBtc;
+                if (sinal.equals('+')) {
+                    taxa = usuario.getXrp().getTaxaCompra();
+                } else {
+                    taxa = usuario.getXrp().getTaxaVenda();
+                }
+            }
+            default -> {
+                ct = 0;
+                taxa = 0;
+            }
         }
-        if(moeda.equals("eth")){
-            ct = ctEth;
-            if(sinal.equals('+')){
-                taxa = usuario.getEth().getTaxaCompra();
-            } else {taxa = usuario.getEth().getTaxaVenda();}
-        }
-        if(moeda.equals("xrp")){
-            ct = ctBtc;
-            if(sinal.equals('+')){
-                taxa = usuario.getXrp().getTaxaCompra();
-            } else {taxa = usuario.getXrp().getTaxaVenda();}
-        } else{ct = 0; taxa = 0;}
+//        if(moeda.equals("btc")){
+//            ct = ctBtc;
+//            if(sinal.equals('+')){
+//                taxa = usuario.getBtc().getTaxaCompra();
+//            } else {taxa = usuario.getBtc().getTaxaVenda();}
+//        }
+//        if(moeda.equals("eth")){
+//            ct = ctEth;
+//            if(sinal.equals('+')){
+//                taxa = usuario.getEth().getTaxaCompra();
+//            } else {taxa = usuario.getEth().getTaxaVenda();}
+//        }
+//        if(moeda.equals("xrp")){
+//            ct = ctBtc;
+//            if(sinal.equals('+')){
+//                taxa = usuario.getXrp().getTaxaCompra();
+//            } else {taxa = usuario.getXrp().getTaxaVenda();}
+//        } else{ct = 0; taxa = 0;}
         
         Connection conn = conexao.getConnection();
         PreparedStatement statement = conn.prepareStatement(sql);
@@ -326,12 +356,62 @@ public class Controller {
     }
     
     public void depositar(JanelaPrincipal j){
-        Usuario usuario = j.getUsuario();
+        Usuario u = j.getUsuario();
         double valorDeposito = parseDouble(j.getTxtValorDepSac().getText());
+        u.setReais(u.getReais() + valorDeposito);
         try {
-            escreveExtratoDepSac("+", "R$", valorDeposito, usuario);
+            escreveExtratoDepSac("+", "R$", valorDeposito, u);
         } catch (SQLException e){
             System.out.println("erro ao atualizar tabela: " + e.getMessage());
         }
+        
+        try {atualizaUsuario(u);} catch (SQLException e){
+            System.out.println("Erro ao atualizar usuário: " + e.getMessage());
+        }
+        
+        atualizaDisplayCarteira(j);
+    }
+    
+    public void sacar(JanelaPrincipal j){
+        Usuario u = j.getUsuario();
+        double valorSaque = parseDouble(j.getTxtValorDepSac().getText());
+        try {
+            escreveExtratoDepSac("-", "R$", valorSaque, u);
+        } catch (SQLException e){
+            System.out.println("erro ao atualizar tabela: " + e.getMessage());
+        }
+        
+        try {atualizaUsuario(u);} catch (SQLException e){
+            System.out.println("Erro ao atualizar usuário: " + e.getMessage());
+        }
+        
+        atualizaDisplayCarteira(j);
+    }
+    public void comprar(JanelaPrincipal j){atualizaDisplayCarteira(j);}
+    public void vender(JanelaPrincipal j){atualizaDisplayCarteira(j);}
+    
+    public void atualizaUsuario(Usuario u) throws SQLException {
+        Conexao conexao = new Conexao();
+        String sql = "UPDATE public.usuario SET btc=?, eth=?, xrp=?, "
+                                                    + "reais=? WHERE cpf=?";
+        Connection conn = conexao.getConnection();
+        PreparedStatement statement = conn.prepareStatement(sql);
+        
+        statement.setDouble(1, u.getBtc().getQtd());
+        statement.setDouble(2, u.getEth().getQtd());
+        statement.setDouble(3, u.getXrp().getQtd());
+        statement.setDouble(4, u.getReais());
+        statement.setString(5, u.getCpf());
+        
+        int numLinhas = statement.executeUpdate();
+        System.out.println("numero de linhas atualizadas: " + numLinhas);
+    }
+    
+    public void atualizaDisplayCarteira(JanelaPrincipal j){
+        Usuario u = j.getUsuario();
+        j.getLabelSaldoReais().setText("R$: " + u.getReais());
+        j.getLabelSaldoBtc().setText("BTC: " + u.getBtc().getQtd());
+        j.getLabelSaldoEth().setText("ETH: " + u.getEth().getQtd());
+        j.getLabelSaldoXrp().setText("XRP: " + u.getXrp().getQtd());
     }
 }

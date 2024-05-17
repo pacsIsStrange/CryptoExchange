@@ -142,6 +142,32 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         return displayExtrato;
     }
 
+    public JLabel getLabelSaldoBtc() {
+        return labelSaldoBtc;
+    }
+
+    public void setLabelSaldoBtc(JLabel labelSaldoBtc) {
+        this.labelSaldoBtc = labelSaldoBtc;
+    }
+
+    public JLabel getLabelSaldoEth() {
+        return labelSaldoEth;
+    }
+
+    public void setLabelSaldoEth(JLabel labelSaldoEth) {
+        this.labelSaldoEth = labelSaldoEth;
+    }
+
+    public JLabel getLabelSaldoXrp() {
+        return labelSaldoXrp;
+    }
+
+    public void setLabelSaldoXrp(JLabel labelSaldoXrp) {
+        this.labelSaldoXrp = labelSaldoXrp;
+    }
+    
+    
+
     public void setDisplayExtrato(JPanel displayExtrato) {
         this.displayExtrato = displayExtrato;
     }
@@ -1080,7 +1106,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btDepositarActionPerformed
 
     private void btSacarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSacarActionPerformed
-        // TODO add your handling code here:
+        control.sacar(this);
     }//GEN-LAST:event_btSacarActionPerformed
 
     private void opcMoedaTrocaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_opcMoedaTrocaItemStateChanged

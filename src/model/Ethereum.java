@@ -11,8 +11,8 @@ package model;
 public class Ethereum extends Moeda implements Tarifacao{
 
     public Ethereum() {
-        this.setTaxaCompra(1.01);
-        this.setTaxaVenda(1.02);
+        this.setTaxaCompra(0.01);
+        this.setTaxaVenda(0.02);
     }
 
     @Override

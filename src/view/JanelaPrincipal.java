@@ -508,7 +508,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     public void setLabelValorXrp(JLabel labelValorXrp) {
         this.labelValorXrp = labelValorXrp;
     }
-
+    
     
     
     
@@ -874,7 +874,11 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         labelSaldoEspecifico.setText("Saldo Atual: X.XXXXX (R$ XXX)");
 
         txtValorTroca.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
-        txtValorTroca.setText("XXXXXX");
+        txtValorTroca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtValorTrocaActionPerformed(evt);
+            }
+        });
 
         labelSaldoEspecifico1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         labelSaldoEspecifico1.setText("Quantidade a ser comprada/vendida:");
@@ -892,6 +896,11 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
         btVender.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btVender.setText("Vender");
+        btVender.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btVenderActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout displayTradeLayout = new javax.swing.GroupLayout(displayTrade);
         displayTrade.setLayout(displayTradeLayout);
@@ -943,7 +952,11 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         jTabbedPane1.addTab("Comprar/Vender", displayTrade);
 
         txtValorDepSac.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
-        txtValorDepSac.setText("XXXXXX");
+        txtValorDepSac.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtValorDepSacActionPerformed(evt);
+            }
+        });
 
         labelValorTroca1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         labelValorTroca1.setText("R$");
@@ -1098,15 +1111,18 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_txtSenhaPropertyChange
 
     private void btComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btComprarActionPerformed
-        // TODO add your handling code here:
+        control.comprar(this);
+        control.preencherExtrato(this);
     }//GEN-LAST:event_btComprarActionPerformed
 
     private void btDepositarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDepositarActionPerformed
         control.depositar(this);
+        control.preencherExtrato(this);
     }//GEN-LAST:event_btDepositarActionPerformed
 
     private void btSacarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSacarActionPerformed
         control.sacar(this);
+        control.preencherExtrato(this);
     }//GEN-LAST:event_btSacarActionPerformed
 
     private void opcMoedaTrocaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_opcMoedaTrocaItemStateChanged
@@ -1116,6 +1132,19 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     private void opcMoedaTrocaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcMoedaTrocaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_opcMoedaTrocaActionPerformed
+
+    private void txtValorTrocaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtValorTrocaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtValorTrocaActionPerformed
+
+    private void txtValorDepSacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtValorDepSacActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtValorDepSacActionPerformed
+
+    private void btVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVenderActionPerformed
+        control.vender(this);
+        control.preencherExtrato(this);
+    }//GEN-LAST:event_btVenderActionPerformed
 
     /**
      * @param args the command line arguments

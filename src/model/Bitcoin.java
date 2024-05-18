@@ -11,8 +11,8 @@ package model;
 public class Bitcoin extends Moeda implements Tarifacao{
 
     public Bitcoin() {
-        this.setTaxaCompra(1.02);
-        this.setTaxaVenda(1.03);
+        this.setTaxaCompra(0.02);
+        this.setTaxaVenda(0.03);
     }
 
     @Override

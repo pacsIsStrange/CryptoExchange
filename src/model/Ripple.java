@@ -11,8 +11,8 @@ package model;
 public class Ripple extends Moeda implements Tarifacao{
 
     public Ripple() {
-        this.setTaxaCompra(1.01);
-        this.setTaxaVenda(1.01);
+        this.setTaxaCompra(0.01);
+        this.setTaxaVenda(0.01);
     }
 
     @Override

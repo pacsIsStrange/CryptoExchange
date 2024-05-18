@@ -21,4 +21,12 @@ public class Moeda {
         this.qtd = qtd;
     }
 
+    public double getTaxaCompra() {
+        return taxaCompra;
+    }
+
+    public double getTaxaVenda() {
+        return taxaVenda;
+    }
+
 }

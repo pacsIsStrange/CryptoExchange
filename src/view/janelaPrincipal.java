@@ -43,7 +43,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         this.labelSaldoEth.setText("ETH: " + qtdEth);
         this.labelSaldoXrp.setText("XRP: " + qtdXrp);
         this.auxTotal = qtdBtc*control.getCtBtc()+ qtdEth * control.getCtEth() +
-                                                    qtdXrp * control.getCtXrp();
+                               usuario.getReais() + qtdXrp * control.getCtXrp();
         
         String btcFormatado = control.df.format(control.getCtBtc());
         String ethFormatado = control.df.format(control.getCtEth());

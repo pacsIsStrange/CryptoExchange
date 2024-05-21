@@ -142,13 +142,13 @@ public class Controller {
         this.ctBtc = this.ctBtc * auxCtBtc;
         this.ctEth = this.ctEth * auxCtEth;
         this.ctXrp = this.ctXrp * auxCtXrp;
-        Double auxTotal = usuario.getBtc().getQtd() * ctBtc + 
-                        usuario.getEth().getQtd() * ctEth +
-                        usuario.getXrp().getQtd() * ctXrp;
-        String totalFormatado = df.format(auxTotal);
-        String btcFormatado = df.format(ctBtc);
-        String ethFormatado = df.format(ctEth);
-        String xrpFormatado = df.format(ctXrp);
+//        Double auxTotal = usuario.getBtc().getQtd() * ctBtc + 
+//                        usuario.getEth().getQtd() * ctEth +
+//                        usuario.getXrp().getQtd() * ctXrp;
+//        String totalFormatado = df.format(auxTotal);
+//        String btcFormatado = df.format(ctBtc);
+//        String ethFormatado = df.format(ctEth);
+//        String xrpFormatado = df.format(ctXrp);
         if (auxCtBtc >= 1){
             janelaPrincipal.getIndexBtc().setForeground(Color.green);} 
         else {
@@ -161,11 +161,13 @@ public class Controller {
             janelaPrincipal.getIndexXrp().setForeground(Color.green);} 
         else {
             janelaPrincipal.getIndexXrp().setForeground(Color.red);}
-            janelaPrincipal.getLabelValorBtc().setText("" + btcFormatado);
-            janelaPrincipal.getLabelValorEth().setText("" + ethFormatado);
-            janelaPrincipal.getLabelValorXrp().setText("" + xrpFormatado);
-            janelaPrincipal.getLabelSaldoTotal2().setText("Saldo total: R$" + 
-                                                                totalFormatado);
+        
+        atualizaDisplayCarteira(j);
+//        janelaPrincipal.getLabelValorBtc().setText("" + btcFormatado);
+//        janelaPrincipal.getLabelValorEth().setText("" + ethFormatado);
+//        janelaPrincipal.getLabelValorXrp().setText("" + xrpFormatado);
+//        janelaPrincipal.getLabelSaldoTotal2().setText("Saldo total: R$" + 
+//                                                                totalFormatado);
     }
     
     public void trocaMoedaTrade(JanelaPrincipal j){
@@ -474,13 +476,18 @@ public class Controller {
                 } default -> {auxCt = 1; taxa = 0; moeda = "";}
             }
             valorConvertido = valorCompra / auxCt; // valor da compra convertido para a moeda desejada
-            valorTaxa = valorConvertido * taxa; // valor de taxa que será deduzido da compra
+            valorTaxa = valorCompra * taxa; // valor de taxa que será deduzido da compra
             valorAdd = valorConvertido - valorTaxa; // valor que será adicionado ao saldo do usuário (da moeda desejada)
             m.setQtd(m.getQtd() + valorAdd); 
             u.setReais(u.getReais() - valorCompra);
+//            System.out.println("valorTaxa = " + valorTaxa);
+//            System.out.println("valorConvertido = " + valorConvertido);
+//            System.out.println("valorCompra = " + valorCompra);
+//            System.out.println("valorAdd (valorConvertido - valorTaxa) = " + valorAdd);
             try {
-            escreveExtrato("+", moeda, valorCompra, valorTaxa, u);
-            escreveExtrato("-", "R$", valorCompra, 0, u);
+                escreveExtrato("+", moeda, valorCompra, valorTaxa, u);
+                escreveExtrato("-", "R$", valorCompra, 0, u);
+                atualizaUsuario(u);
             } catch(SQLException e){
                 System.out.println("Erro ao atualizar extrato: " + e.getMessage());
             }
@@ -488,7 +495,41 @@ public class Controller {
         } else {exibeSaldoInsuficiente(j);}
         
     }
-    public void vender(JanelaPrincipal j){atualizaDisplayCarteira(j);}
+    
+    public void vender(JanelaPrincipal j){
+        Usuario u = j.getUsuario();
+        double valorVenda = parseDouble(j.getTxtValorTroca().getText());
+        Moeda m = null;
+        String moeda;
+        double auxCt, auxQtd, taxa, valorAdd, valorTaxa, valorConvertido;
+        int opcMoeda = j.getOpcMoedaTroca().getSelectedIndex();
+        switch(opcMoeda){
+            case 0 -> {
+                m = u.getBtc(); auxQtd = m.getQtd(); auxCt = ctBtc; 
+                    moeda = "BTC"; taxa = m.getTaxaVenda();
+            } case 1 -> {
+                m = u.getEth(); auxQtd = m.getQtd(); auxCt = ctEth; 
+                    moeda = "ETH"; taxa = m.getTaxaVenda();
+            } case 2 -> {
+                m = u.getXrp(); auxQtd = m.getQtd(); auxCt = ctXrp; 
+                    moeda = "XRP"; taxa = m.getTaxaVenda();
+            } default -> {auxQtd = 0; auxCt = 1; taxa = 0; moeda = "";}
+        }
+        valorConvertido = valorVenda / auxCt;
+        valorTaxa = valorVenda * taxa;
+        valorAdd = valorVenda + valorTaxa;
+        if (auxQtd * auxCt >= valorVenda + valorTaxa){
+        m.setQtd(m.getQtd() - valorConvertido);
+        u.setReais(u.getReais() + valorVenda - valorTaxa);
+        try{
+            escreveExtrato("+", "R$", valorVenda, valorTaxa, u);
+            escreveExtrato("-", moeda, valorVenda, 0, u);
+            atualizaUsuario(u);
+        } catch(SQLException e){
+            System.out.println("Erro ao atualizar extrato: " + e.getMessage());
+        } atualizaDisplayCarteira(j);
+        } else {exibeSaldoInsuficiente(j);}
+    }
     
     public void atualizaUsuario(Usuario u) throws SQLException {
         Conexao conexao = new Conexao();
@@ -513,9 +554,10 @@ public class Controller {
         j.getLabelSaldoBtc().setText("BTC: " + u.getBtc().getQtd());
         j.getLabelSaldoEth().setText("ETH: " + u.getEth().getQtd());
         j.getLabelSaldoXrp().setText("XRP: " + u.getXrp().getQtd());
-        Double auxTotal = u.getBtc().getQtd() * ctBtc + 
-                        u.getEth().getQtd() * ctEth +
-                        u.getXrp().getQtd() * ctXrp;
+        Double auxTotal = u.getReais() + 
+                          u.getBtc().getQtd() * ctBtc + 
+                          u.getEth().getQtd() * ctEth +
+                          u.getXrp().getQtd() * ctXrp;
         String totalFormatado = df.format(auxTotal);
         janelaPrincipal.getLabelSaldoTotal2().setText("Saldo total: R$" + 
                                                                 totalFormatado);

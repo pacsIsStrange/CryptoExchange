@@ -87,6 +87,13 @@ public class JanelaLogin extends javax.swing.JFrame {
                 txtCpfFocusLost(evt);
             }
         });
+        txtCpf.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                txtCpfInputMethodTextChanged(evt);
+            }
+        });
         txtCpf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCpfActionPerformed(evt);
@@ -107,6 +114,13 @@ public class JanelaLogin extends javax.swing.JFrame {
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtSenhaFocusLost(evt);
+            }
+        });
+        txtSenha.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                txtSenhaInputMethodTextChanged(evt);
             }
         });
         txtSenha.addActionListener(new java.awt.event.ActionListener() {
@@ -166,15 +180,21 @@ public class JanelaLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtCpfFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCpfFocusGained
-        // TODO add your handling code here:
+        if (this.txtCpf.getText().equals("CPF")){
+            this.txtCpf.setText("");
+        }
     }//GEN-LAST:event_txtCpfFocusGained
 
     private void txtCpfFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCpfFocusLost
-        // TODO add your handling code here:
+        if (this.txtCpf.getText().equals("CPF")){
+            this.txtCpf.setText("");
+        }
     }//GEN-LAST:event_txtCpfFocusLost
 
     private void txtCpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCpfActionPerformed
-        // TODO add your handling code here:
+        if (this.txtCpf.getText().equals("CPF")){
+            this.txtCpf.setText("");
+        }
     }//GEN-LAST:event_txtCpfActionPerformed
 
     private void txtCpfPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_txtCpfPropertyChange
@@ -182,11 +202,15 @@ public class JanelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCpfPropertyChange
 
     private void txtSenhaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSenhaFocusGained
-        // TODO add your handling code here:
+        if (this.txtCpf.getText().equals("Senha")){
+            this.txtCpf.setText("");
+        }
     }//GEN-LAST:event_txtSenhaFocusGained
 
     private void txtSenhaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSenhaFocusLost
-        // TODO add your handling code here:
+        if (this.txtCpf.getText().equals("Senha")){
+            this.txtCpf.setText("");
+        }
     }//GEN-LAST:event_txtSenhaFocusLost
 
     private void txtSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSenhaActionPerformed
@@ -200,6 +224,18 @@ public class JanelaLogin extends javax.swing.JFrame {
     private void botaoLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLoginActionPerformed
         control.loginUsuario();
     }//GEN-LAST:event_botaoLoginActionPerformed
+
+    private void txtCpfInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_txtCpfInputMethodTextChanged
+        if (this.txtCpf.getText().equals("CPF")){
+            this.txtCpf.setText("");
+        }
+    }//GEN-LAST:event_txtCpfInputMethodTextChanged
+
+    private void txtSenhaInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_txtSenhaInputMethodTextChanged
+        if (this.txtCpf.getText().equals("Senha")){
+            this.txtCpf.setText("");
+        }
+    }//GEN-LAST:event_txtSenhaInputMethodTextChanged
 
     
     

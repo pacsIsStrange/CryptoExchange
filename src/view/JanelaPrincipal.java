@@ -1111,8 +1111,10 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_txtSenhaPropertyChange
 
     private void btComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btComprarActionPerformed
-        control.comprar(this);
-        control.preencherExtrato(this);
+        if (control.pedeSenha(this)){
+            control.comprar(this);
+            control.preencherExtrato(this);
+        }
     }//GEN-LAST:event_btComprarActionPerformed
 
     private void btDepositarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDepositarActionPerformed
@@ -1121,8 +1123,9 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btDepositarActionPerformed
 
     private void btSacarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSacarActionPerformed
+        if (control.pedeSenha(this)){
         control.sacar(this);
-        control.preencherExtrato(this);
+        control.preencherExtrato(this);}
     }//GEN-LAST:event_btSacarActionPerformed
 
     private void opcMoedaTrocaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_opcMoedaTrocaItemStateChanged
@@ -1142,8 +1145,10 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_txtValorDepSacActionPerformed
 
     private void btVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVenderActionPerformed
-        control.vender(this);
-        control.preencherExtrato(this);
+        if (control.pedeSenha(this)){
+            control.vender(this);
+            control.preencherExtrato(this);
+        }
     }//GEN-LAST:event_btVenderActionPerformed
 
     /**

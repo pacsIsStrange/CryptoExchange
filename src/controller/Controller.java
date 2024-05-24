@@ -137,7 +137,12 @@ public class Controller {
         this.ctBtc = this.ctBtc * auxCtBtc;
         this.ctEth = this.ctEth * auxCtEth;
         this.ctXrp = this.ctXrp * auxCtXrp;
-
+        String btcFormatado = df.format(ctBtc);
+        String ethFormatado = df.format(ctEth);
+        String xrpFormatado = df.format(ctXrp);
+        j.getLabelValorBtc().setText(btcFormatado);
+        j.getLabelValorEth().setText(ethFormatado);
+        j.getLabelValorXrp().setText(xrpFormatado);
         if (auxCtBtc >= 1){
             janelaPrincipal.getIndexBtc().setForeground(Color.green);} 
         else {
@@ -242,12 +247,6 @@ public class Controller {
         String data = ("" + f.format(dia) + "-" + f.format(mes) + "-" + ano);
         String horario = ("" + f.format(hora) + ":" + f.format(minuto));
         
-        System.out.println("Data: " + data + " Horário: " + horario);
-        System.out.println("Usuário CPF: " + usuario.getCpf());
-        System.out.println("Sinal: " + sinal + " Valor: " + valor + " Valor Taxa: " + valorTaxa);
-        System.out.println("Saldos - Reais: " + usuario.getReais() + " BTC: " + usuario.getBtc().getQtd() + 
-                            " ETH: " + usuario.getEth().getQtd() + " XRP: " + usuario.getXrp().getQtd());
-        
         statement.setString(1, usuario.getCpf()); statement.setString(2, data);
         statement.setString(3, horario); statement.setString(4, sinal);
         statement.setDouble(5, valor); statement.setString(6, moeda);
@@ -259,90 +258,6 @@ public class Controller {
 
         statement.execute();
     }
-    
-//    public void escreveExtratoTrade(String sinal, String moeda, double valor, 
-//                                         Usuario usuario) throws SQLException{
-//        Conexao conexao = new Conexao();
-//        String sql = "INSERT INTO op (cpf, \"Data\", \"Hora\", \"+/-\", \"Valor (R$)\","
-//                   + " \"Moeda\", \"Cotação\", \"Taxa\", \"Saldo (R$)\", \"Saldo (BTC)\","
-//                   + " \"Saldo (ETH)\", \"Saldo (XRP)\") VALUES (?, ?, ?, ?, ?, ?,"
-//                   + " ?, ?, ?, ?, ?, ?)";
-//        double ct, taxa;
-//        switch (moeda) {
-//            case "btc" -> {
-//                ct = ctBtc;
-//                if (sinal.equals('+')) {
-//                    taxa = usuario.getBtc().getTaxaCompra();
-//                } else {
-//                    taxa = usuario.getBtc().getTaxaVenda();
-//                }
-//            }
-//            case "eth" -> {
-//                ct = ctEth;
-//                if (sinal.equals('+')) {
-//                    taxa = usuario.getEth().getTaxaCompra();
-//                } else {
-//                    taxa = usuario.getEth().getTaxaVenda();
-//                }
-//            }
-//            case "xrp" -> {
-//                ct = ctBtc;
-//                if (sinal.equals('+')) {
-//                    taxa = usuario.getXrp().getTaxaCompra();
-//                } else {
-//                    taxa = usuario.getXrp().getTaxaVenda();
-//                }
-//            }
-//            default -> {
-//                ct = 0;
-//                taxa = 0;
-//            }
-//        }
-////        if(moeda.equals("btc")){
-////            ct = ctBtc;
-////            if(sinal.equals('+')){
-////                taxa = usuario.getBtc().getTaxaCompra();
-////            } else {taxa = usuario.getBtc().getTaxaVenda();}
-////        }
-////        if(moeda.equals("eth")){
-////            ct = ctEth;
-////            if(sinal.equals('+')){
-////                taxa = usuario.getEth().getTaxaCompra();
-////            } else {taxa = usuario.getEth().getTaxaVenda();}
-////        }
-////        if(moeda.equals("xrp")){
-////            ct = ctBtc;
-////            if(sinal.equals('+')){
-////                taxa = usuario.getXrp().getTaxaCompra();
-////            } else {taxa = usuario.getXrp().getTaxaVenda();}
-////        } else{ct = 0; taxa = 0;}
-//        
-//        Connection conn = conexao.getConnection();
-//        PreparedStatement statement = conn.prepareStatement(sql);
-//
-//        LocalDateTime tempo = LocalDateTime.now();
-//        int ano = tempo.getYear();
-//        int mes = tempo.getMonthValue();
-//        int dia = tempo.getDayOfMonth();
-//        int hora = tempo.getHour();
-//        int minuto = tempo.getMinute();
-//
-//        String data = ("" + dia + "-" + mes + "-" + ano);
-//        String horario = ("" + hora + ":" + minuto);
-//
-//        statement.setString(1, usuario.getCpf()); statement.setString(2, data);
-//        statement.setString(3, horario); statement.setString(4, sinal);
-//        statement.setDouble(5, valor); statement.setString(6, moeda);
-//        statement.setDouble(7, ct); statement.setDouble(8, taxa);
-//        statement.setDouble(9, usuario.getReais());
-//        statement.setDouble(10, usuario.getBtc().getQtd()); 
-//        statement.setDouble(11, usuario.getEth().getQtd());
-//        statement.setDouble(12, usuario.getXrp().getQtd()); 
-//
-//        statement.execute();
-//        System.out.println("stmt executado");
-//    }
-//    
    
     public void depositar(JanelaPrincipal j){
         Usuario u = j.getUsuario();
@@ -357,7 +272,7 @@ public class Controller {
         try {atualizaUsuario(u);} catch (SQLException e){
             System.out.println("Erro ao atualizar usuário: " + e.getMessage());
         }
-        // preencherExtrato(j);
+
         atualizaDisplayCarteira(j);
     }
     
@@ -407,10 +322,6 @@ public class Controller {
             valorAdd = valorConvertido - valorTaxa; // valor que será adicionado ao saldo do usuário (da moeda desejada)
             m.setQtd(m.getQtd() + valorAdd); 
             u.setReais(u.getReais() - valorCompra);
-//            System.out.println("valorTaxa = " + valorTaxa);
-//            System.out.println("valorConvertido = " + valorConvertido);
-//            System.out.println("valorCompra = " + valorCompra);
-//            System.out.println("valorAdd (valorConvertido - valorTaxa) = " + valorAdd);
             try {
                 escreveExtrato("+", moeda, valorCompra, valorTaxa, u);
                 escreveExtrato("-", "R$", valorCompra, 0, u);

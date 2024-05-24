@@ -99,33 +99,41 @@ public class Controller {
     }
     
     public void loginUsuario(){
-        Usuario usuario = new Usuario(janelaLogin.getTxtCpf().getText(), 
+        Usuario u = new Usuario(janelaLogin.getTxtCpf().getText(), 
                                       janelaLogin.getTxtSenha().getText(), 
                                       null, null, null, null, 0);
         Conexao conexao = new Conexao();
+        if (u.getSenha().length() != 6 || !u.getSenha().matches("\\d{6}")) {
+            JOptionPane.showMessageDialog(janelaLogin, 
+                                       "A senha deve ter 6 dígitos numéricos.");
+            return;
+        }
         try{
             Connection conn = conexao.getConnection();
             UsuarioDAO dao = new UsuarioDAO(conn);
-            ResultSet res = dao.consultar(usuario);
+            ResultSet res = dao.consultar(u);
             if (
-                res.next()){JOptionPane.showMessageDialog(janelaLogin, "Login realizado com sucesso.");
+                res.next()){JOptionPane.showMessageDialog(janelaLogin, 
+                                                "Login realizado com sucesso.");
                 janelaLogin.setVisible(false);
-                usuario.setNome(res.getString("nome"));
-                usuario.setBtc(new Bitcoin()); usuario.setEth(new Ethereum());
-                usuario.setXrp(new Ripple());
-                usuario.getBtc().setQtd(res.getDouble("btc"));
-                usuario.getEth().setQtd(res.getDouble("eth"));
-                usuario.getXrp().setQtd(res.getDouble("xrp"));
-                usuario.setReais(res.getDouble("reais"));
-                System.out.println(usuario);
-                this.janelaPrincipal = new JanelaPrincipal(this, usuario);
+                u.setNome(res.getString("nome"));
+                u.setBtc(new Bitcoin()); u.setEth(new Ethereum());
+                u.setXrp(new Ripple());
+                u.getBtc().setQtd(res.getDouble("btc"));
+                u.getEth().setQtd(res.getDouble("eth"));
+                u.getXrp().setQtd(res.getDouble("xrp"));
+                u.setReais(res.getDouble("reais"));
+                System.out.println(u);
+                this.janelaPrincipal = new JanelaPrincipal(this, u);
                 janelaPrincipal.setVisible(true);
                 
             } else {
-                JOptionPane.showMessageDialog(janelaLogin, "CPF e/ou senha inválidos.");
+                JOptionPane.showMessageDialog(janelaLogin, 
+                                                   "CPF e/ou senha inválidos.");
             }
         }catch(SQLException e){
-            JOptionPane.showMessageDialog(janelaLogin, "Não foi possível estabelecer a conexão.");
+            JOptionPane.showMessageDialog(janelaLogin, 
+                                     "Não foi possível estabelecer a conexão.");
         }
     }
     

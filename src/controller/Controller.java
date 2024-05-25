@@ -369,7 +369,7 @@ public class Controller {
         u.setReais(u.getReais() + valorVenda - valorTaxa);
         try{
             escreveExtrato("+", "R$", valorVenda, valorTaxa, u);
-            escreveExtrato("-", moeda, valorVenda, 0, u);
+            escreveExtrato("-", moeda, valorVenda, valorTaxa, u);
             atualizaUsuario(u);
         } catch(SQLException e){
             System.out.println("Erro ao atualizar extrato: " + e.getMessage());

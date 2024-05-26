@@ -36,8 +36,8 @@ public class Controller {
     private JanelaPrincipal janelaPrincipal;
     private JanelaLogin janelaLogin;
     private double ctBtc, ctEth, ctXrp, auxCtBtc, auxCtEth, auxCtXrp;
-    private Random random;
-    public DecimalFormat df = new DecimalFormat("#.##");
+    private Random random; // variável para utilizar os métodos que serão responsáveis para aleatorizar as cotações das moedas
+    public DecimalFormat df = new DecimalFormat("#.##"); // essa variável guarda a formatação que será usada em diversos momentos da execução do programa
 
     public double getCtBtc() {
         return ctBtc;
@@ -92,30 +92,33 @@ public class Controller {
     public Controller(JanelaLogin janelaLogin) {
         this.janelaLogin = janelaLogin;
         this.random = new Random();
-        
+//      parte responsável pela geração da cotação inicial das moedas
         this.ctBtc = random.nextDouble(1.0, 150.0);
         this.ctEth = random.nextDouble(1.0, 150.0);
         this.ctXrp = random.nextDouble(1.0, 150.0);
     }
     
+//------------------------------------------------------------------------------
     public void loginUsuario(){
         Usuario u = new Usuario(janelaLogin.getTxtCpf().getText(), 
                                       janelaLogin.getTxtSenha().getText(), 
                                       null, null, null, null, 0);
         Conexao conexao = new Conexao();
-        if (u.getSenha().length() != 6 || !u.getSenha().matches("\\d{6}")) {
+        if (u.getSenha().length() != 6 || !u.getSenha().matches("\\d{6}")) { // verifica se a senha NÃO corresponde a 6 digitos numéricos
             JOptionPane.showMessageDialog(janelaLogin, 
                                        "A senha deve ter 6 dígitos numéricos.");
             return;
         }
         try{
+//          procura o usuário no banco de dados, e guarda o resultado na variável "res"
             Connection conn = conexao.getConnection();
             UsuarioDAO dao = new UsuarioDAO(conn);
             ResultSet res = dao.consultar(u);
-            if (
-                res.next()){JOptionPane.showMessageDialog(janelaLogin, 
+            if (res.next()){
+                JOptionPane.showMessageDialog(janelaLogin, 
                                                 "Login realizado com sucesso.");
-                janelaLogin.setVisible(false);
+                janelaLogin.setVisible(false); // oculta a janela de login uma vez que o login foi realizado
+//              parte responsável por guardar os valores do SQL numa variável do tipo "Usuario" que será acessada pelo programa para ler e alterar os valores do banco de dados
                 u.setNome(res.getString("nome"));
                 u.setBtc(new Bitcoin()); u.setEth(new Ethereum());
                 u.setXrp(new Ripple());
@@ -123,7 +126,8 @@ public class Controller {
                 u.getEth().setQtd(res.getDouble("eth"));
                 u.getXrp().setQtd(res.getDouble("xrp"));
                 u.setReais(res.getDouble("reais"));
-                System.out.println(u);
+                
+//              inicializa a janela principal do programa com os dados do usuário correspondente ao login
                 this.janelaPrincipal = new JanelaPrincipal(this, u);
                 janelaPrincipal.setVisible(true);
                 
@@ -136,21 +140,29 @@ public class Controller {
                                      "Não foi possível estabelecer a conexão.");
         }
     }
+//------------------------------------------------------------------------------
     
+//------------------------------------------------------------------------------
     public void atualizaCt(JanelaPrincipal j){
-        Usuario usuario = j.getUsuario();
+//      parte responsável por gerar o coeficiente que será aplicado às cotações das moedas para que sejam atualizadas
         this.auxCtBtc = random.nextDouble(0.8, 1.2);
         this.auxCtEth = random.nextDouble(0.8, 1.2);
         this.auxCtXrp = random.nextDouble(0.8, 1.2);
+        
+//      multiplica os valores das cotações pelos valores gerados acima
         this.ctBtc = this.ctBtc * auxCtBtc;
         this.ctEth = this.ctEth * auxCtEth;
         this.ctXrp = this.ctXrp * auxCtXrp;
+        
+//      formata os valores das cotaçÕes para que sejam exibidos de maneira mais eficiente ao usuário e atualiza os componentes correspondentes para exibi-los na tela
         String btcFormatado = df.format(ctBtc);
         String ethFormatado = df.format(ctEth);
         String xrpFormatado = df.format(ctXrp);
         j.getLabelValorBtc().setText(btcFormatado);
         j.getLabelValorEth().setText(ethFormatado);
         j.getLabelValorXrp().setText(xrpFormatado);
+        
+//      colore o indicador de variação da cotação de acordo com a variação do preço (AUMENTA -> verde // DIMINUI -> vermelho)
         if (auxCtBtc >= 1){
             janelaPrincipal.getIndexBtc().setForeground(Color.green);} 
         else {
@@ -166,7 +178,10 @@ public class Controller {
         
         atualizaDisplayCarteira(j);
     }
+//------------------------------------------------------------------------------
     
+//------------------------------------------------------------------------------
+//  esse método apenas exibe o saldo correspondente à moeda escolhida pelo usuário na tela de compra e venda 
     public void trocaMoedaTrade(JanelaPrincipal j){
         int opcMoeda = j.getOpcMoedaTroca().getSelectedIndex();
         Usuario usuario = j.getUsuario();
@@ -186,22 +201,29 @@ public class Controller {
                                qtdXrp + " (R$" + df.format(qtdXrp * ctXrp)+")");
         }
     }
- 
+//------------------------------------------------------------------------------
+    
+//------------------------------------------------------------------------------
     public void preencherExtrato(JanelaPrincipal j){
         JTable tabela = j.getTabelaExtrato();
         Conexao conexao = new Conexao();
         try{
+            
+//          obtém a tabela equivalente ao extrato de operações do usuário no banco de dados e instancia uma tabela modelo que será usada para ser "estampada" na tabela da GUI
             Connection conn = conexao.getConnection();
             ExtratoDAO dao = new ExtratoDAO(conn);
             ResultSet res = dao.consultar(j.getUsuario().getCpf());
-            DefaultTableModel modelo = new DefaultTableModel();
-                
+            DefaultTableModel modelo = new DefaultTableModel();    
             ResultSetMetaData metaData = res.getMetaData();
             int numColunas = metaData.getColumnCount();
-            for (int i = 2; i <= numColunas; i++){
+
+//          cria as colunas da tabela do banco de dados na tabela modelo
+//          começa com i=2 para ignorar a primeira coluna, que correponde ao cpf do usuário, para filtrar apenas as operações do usuário para serem exibidas
+            for (int i = 2; i <= numColunas; i++){ 
                 modelo.addColumn(metaData.getColumnName(i));
             }
 
+//          preenche as linhas da tabela modelo com as linhas equivalentes no banco de dados
             while (res.next()){
                 Object[] rowData = new Object[numColunas];
                 for (int i = 2; i <= numColunas; i++){
@@ -210,8 +232,8 @@ public class Controller {
                 modelo.addRow(rowData);
             }
             
+//          "estampa" a tabela modelo na tabela da GUI
             tabela.setModel(modelo);
-            
             DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
             centerRenderer.setHorizontalAlignment(JLabel.CENTER);
             tabela.setDefaultRenderer(Object.class, centerRenderer);
@@ -220,16 +242,20 @@ public class Controller {
             System.out.println("nao foi possivel obter o extrato");
         }
     }
-      
+//------------------------------------------------------------------------------
+    
+//------------------------------------------------------------------------------
+//  esse método escreve uma linha na tabela de operações do banco de dados
     public void escreveExtrato(String sinal, String moeda, double valor, 
-                        double valorTaxa ,Usuario usuario) throws SQLException{
+                         double valorTaxa ,Usuario usuario) throws SQLException{
+        double ct;
         Conexao conexao = new Conexao();
         DecimalFormat f = new DecimalFormat("00"); // se minuto for 1 -> 01 ; 2 -> 02 ; 11 -> 11
         String sql = "INSERT INTO op (cpf, \"Data\", \"Hora\", \"+/-\", \"Valor (R$)\","
                    + " \"Moeda\", \"Cotação\", \"Taxa\", \"Saldo (R$)\", \"Saldo (BTC)\","
                    + " \"Saldo (ETH)\", \"Saldo (XRP)\") VALUES (?, ?, ?, ?, ?, ?,"
                    + " ?, ?, ?, ?, ?, ?)";
-        double ct;
+        
         ct = switch (moeda) {
             case "BTC" -> ctBtc;
             case "ETH" -> ctEth;
@@ -240,11 +266,9 @@ public class Controller {
         
         
         Connection conn = conexao.getConnection();
-//        System.out.println("iii");
         PreparedStatement statement = conn.prepareStatement(sql);
         
         LocalDateTime tempo = LocalDateTime.now();
-//        System.out.println("hhh");
         
         int ano = tempo.getYear();
         int mes = tempo.getMonthValue();
@@ -266,7 +290,9 @@ public class Controller {
 
         statement.execute();
     }
-   
+//------------------------------------------------------------------------------
+    
+//------------------------------------------------------------------------------
     public void depositar(JanelaPrincipal j){
         Usuario u = j.getUsuario();
         double valorDeposito = parseDouble(j.getTxtValorDepSac().getText());
@@ -283,7 +309,9 @@ public class Controller {
 
         atualizaDisplayCarteira(j);
     }
+//------------------------------------------------------------------------------
     
+//------------------------------------------------------------------------------
     public void sacar(JanelaPrincipal j){
         Usuario u = j.getUsuario();
         double valorSaque = parseDouble(j.getTxtValorDepSac().getText());
@@ -302,14 +330,16 @@ public class Controller {
             atualizaDisplayCarteira(j);} 
         else{exibeSaldoInsuficiente(j);}
     }
+//------------------------------------------------------------------------------
+    
+//------------------------------------------------------------------------------
     public void comprar(JanelaPrincipal j) {
         Usuario u = j.getUsuario();
         double valorCompra = parseDouble(j.getTxtValorTroca().getText());
         if (valorCompra <= u.getReais()){
             Moeda m = null;
             String moeda;
-            double auxCt, auxQtd, taxa, valorAdd, 
-                   valorTaxa, valorConvertido; 
+            double auxCt, auxQtd, taxa, valorAdd, valorTaxa, valorConvertido; 
             int opcMoeda = j.getOpcMoedaTroca().getSelectedIndex();
             switch (opcMoeda) {
                 case 0 -> {
@@ -328,8 +358,8 @@ public class Controller {
             valorConvertido = valorCompra / auxCt; // valor da compra convertido para a moeda desejada
             valorTaxa = valorCompra * taxa; // valor de taxa que será deduzido da compra
             valorAdd = valorConvertido - valorTaxa; // valor que será adicionado ao saldo do usuário (da moeda desejada)
-            m.setQtd(m.getQtd() + valorAdd); 
-            u.setReais(u.getReais() - valorCompra);
+            m.setQtd(m.getQtd() + valorAdd); // atualiza a quantidade da moeda correspondente no saldo do usuário
+            u.setReais(u.getReais() - valorCompra); // atualiza o saldo de reais do usuário
             try {
                 escreveExtrato("+", moeda, valorCompra, valorTaxa, u);
                 escreveExtrato("-", "R$", valorCompra, 0, u);
@@ -341,7 +371,9 @@ public class Controller {
         } else {exibeSaldoInsuficiente(j);}
         
     }
+//------------------------------------------------------------------------------
     
+//------------------------------------------------------------------------------
     public void vender(JanelaPrincipal j){
         Usuario u = j.getUsuario();
         double valorVenda = parseDouble(j.getTxtValorTroca().getText());
@@ -365,18 +397,22 @@ public class Controller {
         valorTaxa = valorVenda * taxa;
         valorAdd = valorVenda + valorTaxa;
         if (auxQtd * auxCt >= valorVenda + valorTaxa){
-        m.setQtd(m.getQtd() - valorConvertido);
-        u.setReais(u.getReais() + valorVenda - valorTaxa);
-        try{
-            escreveExtrato("+", "R$", valorVenda, valorTaxa, u);
-            escreveExtrato("-", moeda, valorVenda, valorTaxa, u);
-            atualizaUsuario(u);
-        } catch(SQLException e){
-            System.out.println("Erro ao atualizar extrato: " + e.getMessage());
-        } atualizaDisplayCarteira(j);
+            m.setQtd(m.getQtd() - valorConvertido);
+            u.setReais(u.getReais() + valorVenda - valorTaxa);
+            try{
+                escreveExtrato("+", "R$", valorVenda, valorTaxa, u);
+                escreveExtrato("-", moeda, valorVenda, valorTaxa, u);
+                atualizaUsuario(u);
+            } catch(SQLException e){
+                System.out.println("Erro ao atualizar extrato: " + e.getMessage());
+            } 
+            atualizaDisplayCarteira(j);
         } else {exibeSaldoInsuficiente(j);}
     }
+//------------------------------------------------------------------------------
     
+//------------------------------------------------------------------------------
+//  atualiza os dados do usuário no banco de acordo com as informações do usuário do programa
     public void atualizaUsuario(Usuario u) throws SQLException {
         Conexao conexao = new Conexao();
         String sql = "UPDATE usuario SET btc=?, eth=?, xrp=?, "
@@ -393,7 +429,9 @@ public class Controller {
         int numLinhas = statement.executeUpdate();
         System.out.println("numero de linhas atualizadas: " + numLinhas);
     }
+//------------------------------------------------------------------------------
     
+//------------------------------------------------------------------------------
     public void atualizaDisplayCarteira(JanelaPrincipal j){
         Usuario u = j.getUsuario();
         j.getLabelSaldoReais().setText("R$: " + u.getReais());
@@ -408,11 +446,16 @@ public class Controller {
         janelaPrincipal.getLabelSaldoTotal2().setText("Saldo total: R$" + 
                                                                 totalFormatado);
     }
+//------------------------------------------------------------------------------
     
+//------------------------------------------------------------------------------
     public void exibeSaldoInsuficiente(JanelaPrincipal j){
         JOptionPane.showMessageDialog(j, "Saldo insuficiente.");
     }
+//------------------------------------------------------------------------------
     
+//------------------------------------------------------------------------------
+//  esse método é utilizado para solicitar a senha do usuário para certas operações
     public boolean pedeSenha(JanelaPrincipal j){
         Usuario u = j.getUsuario();
         String senha = JOptionPane.showInputDialog(j, "Digite sua senha:", 
@@ -422,4 +465,6 @@ public class Controller {
             return false;
         }
     }
+//------------------------------------------------------------------------------
+    
 }

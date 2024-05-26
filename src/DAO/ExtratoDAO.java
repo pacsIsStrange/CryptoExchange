@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
  *
  * @author Pedro Alexandre
  */
+
+// obtém a tabela de extrato de operações do banco de dados
 public class ExtratoDAO {
     private Connection conn;
     

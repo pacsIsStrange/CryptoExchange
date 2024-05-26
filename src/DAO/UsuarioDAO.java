@@ -12,6 +12,8 @@ import java.sql.PreparedStatement;
  *
  * @author Pedro Alexandre
  */
+
+// obtém os dados do usuário do banco de dados
 public class UsuarioDAO {
     private Connection conn;
 

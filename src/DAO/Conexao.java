@@ -10,6 +10,8 @@ import java.sql.DriverManager;
  *
  * @author Pedro Alexandre
  */
+
+// realiza a conexão com o banco de dados
 public class Conexao {
     public Connection getConnection() throws SQLException{
         Connection conexao = DriverManager.getConnection(
